@@ -5,5 +5,5 @@
 </script>
 
 <ParaglideJS {i18n}>
-  <slot></slot>
+  <slot />
 </ParaglideJS>

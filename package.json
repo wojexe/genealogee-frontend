@@ -34,6 +34,7 @@
   "type": "module",
   "dependencies": {
     "@inlang/paraglide-js-adapter-sveltekit": "^0.5.10",
+    "formsnap": "^0.5.1",
     "sveltekit-superforms": "^2.9.0",
     "valibot": "^0.30.0"
   }
