@@ -1,11 +1,9 @@
 <script>
-  import * as m from "$paraglide/messages";
-
-  import Login from "$lib/components/login.svelte";
+  import Button from "$lib/components/ui/button/button.svelte";
 </script>
 
-<h1 class="text-center">Genealogee 🌳</h1>
+<div class="flex flex-col gap-3">
+  <Button href="/">Login</Button>
 
-<Login />
-
-<p class="text-center">{m.aboutUs()}</p>
+  <Button href="/">Register</Button>
+</div>

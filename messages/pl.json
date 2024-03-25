@@ -1,4 +1,6 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
-  "aboutUs": "O nas"
+  "aboutUs": "O nas",
+  "madeWith": "Stworzone z ❤️",
+  "sourceCode": "Źródło"
 }

@@ -4,10 +4,10 @@ import { dev } from "$app/environment";
 
 /** @type {import('pino').LoggerOptions} */
 const options = {
-  base: {
-    id: crypto.randomUUID(),
-    pid: process.pid,
-    hostname: process.env.HOSTNAME,
+  mixin() {
+    return {
+      id: crypto.randomUUID(),
+    };
   },
 };
 
