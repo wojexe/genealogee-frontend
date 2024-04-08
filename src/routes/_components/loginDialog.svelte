@@ -6,7 +6,7 @@
   import { defaults, superForm } from "sveltekit-superforms";
   import { valibot } from "sveltekit-superforms/adapters";
 
-  import { login } from "$lib/api/auth.svelte";
+  import { login } from "$lib/api/auth";
 
   import { loginSchema } from "./loginSchema";
 

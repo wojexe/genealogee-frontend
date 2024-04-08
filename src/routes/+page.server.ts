@@ -1,7 +1,7 @@
 import { redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
-import { me } from "$lib/api/auth.svelte";
+import { me } from "$lib/api/auth";
 
 export const load: PageServerLoad = async ({ fetch }) => {
   const { authenticated } = await me(fetch);

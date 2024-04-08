@@ -2,7 +2,7 @@
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
 
-  import { logout as requestLogout } from "$lib/api/auth.svelte";
+  import { logout as requestLogout } from "$lib/api/auth";
   import * as m from "$paraglide/messages";
   import Button from "./ui/button/button.svelte";
   import { Root as Card, Content } from "./ui/card";

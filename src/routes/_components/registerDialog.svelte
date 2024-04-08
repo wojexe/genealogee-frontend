@@ -10,7 +10,7 @@
   import { Content, Header, Title, Footer } from "$lib/components/ui/dialog";
   import { Control, Label, Field, FieldErrors } from "$lib/components/ui/form";
   import { Input } from "$lib/components/ui/input";
-  import { register } from "$lib/api/auth.svelte";
+  import { register } from "$lib/api/auth";
   import { goto } from "$app/navigation";
 
   const data = defaults(valibot(registerSchema));

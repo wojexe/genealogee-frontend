@@ -5,7 +5,7 @@ import { sequence } from "@sveltejs/kit/hooks";
 
 import { i18n } from "$lib/i18n";
 import { logger } from "$lib/server/logger";
-import { me } from "$lib/api/auth.svelte";
+import { me } from "$lib/api/auth";
 
 /// SvelteKit server error handling
 
