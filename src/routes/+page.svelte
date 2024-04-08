@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
   import * as m from "$paraglide/messages";
 
-  import { Root as Dialog, Trigger } from "$lib/components/ui/dialog";
+  import { Dialog, Trigger } from "$lib/components/ui/dialog";
   import { buttonVariants } from "$lib/components/ui/button";
 
   import LoginDialog from "./_components/loginDialog.svelte";
