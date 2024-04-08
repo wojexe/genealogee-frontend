@@ -1,15 +1,51 @@
 <script>
+  import { goto } from "$app/navigation";
+  import { logout as requestLogout } from "$lib/api/auth.svelte";
   import * as m from "$paraglide/messages";
+  import Button from "./ui/button/button.svelte";
+  import { Root as Card, Content } from "./ui/card";
 
   let links = [
-    { href: "/", text: m.aboutUs() },
-    { href: "/", text: m.sourceCode() },
-    { href: "/", text: m.madeWith() }
-  ]
+    { href: "/about", text: m.aboutUs() },
+    {
+      href: "https://github.com/wojexe/genealogee-frontend",
+      text: m.sourceCode(),
+    },
+  ];
+
+  let buttonDisabled = $state(false);
+
+  async function logout() {
+    const { loggedOut, response, error } = await requestLogout();
+
+    console.log(response);
+
+    if (loggedOut) {
+      return goto("/");
+    }
+
+    if (response) {
+      // TODO: send a toast
+      buttonDisabled = true;
+      console.error(response);
+    }
+
+    if (error) {
+      // TODO: send a toast
+      buttonDisabled = true;
+      console.error(error);
+    }
+  }
 </script>
 
-<div class="text-primary bg-secondary w-fit flex flex-row gap-6 self-center content-center p-4 rounded-full">
-{#each links as link}
-    <a class="hover:underline" href={link.href}>{link.text}</a>
-  {/each}
-</div>
+<Card class="bg-accent w-fit flex flex-row self-center rounded-full">
+  <Content class="p-2">
+    {#each links as link}
+      <Button variant="link" href={link.href}>{link.text}</Button>
+    {/each}
+
+    <Button disabled={buttonDisabled} variant="link" on:click={() => logout()}>
+      Log out
+    </Button>
+  </Content>
+</Card>

@@ -1,9 +1,8 @@
-import pino from "pino";
+import pino, { type LoggerOptions } from "pino";
 
 import { dev } from "$app/environment";
 
-/** @type {import('pino').LoggerOptions} */
-const options = {
+const options: LoggerOptions = {
   mixin() {
     return {
       id: crypto.randomUUID(),

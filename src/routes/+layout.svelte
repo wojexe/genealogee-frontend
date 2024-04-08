@@ -1,4 +1,6 @@
-<script>
+<!-- <svelte:options runes={false} /> -->
+
+<script lang="ts">
   import "../app.pcss";
 
   import { i18n } from "$lib/i18n";
@@ -32,6 +34,6 @@
 
 <style>
   :global(body) {
-    @apply text-primary-foreground bg-background min-h-screen p-6 flex flex-col;
+    @apply min-h-screen p-6 flex flex-col;
   }
 </style>

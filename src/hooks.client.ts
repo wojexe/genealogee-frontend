@@ -1,7 +1,8 @@
+import type { HandleClientError } from "@sveltejs/kit";
+
 /// SvelteKit client error handling
 
-/** @type {import("@sveltejs/kit").HandleClientError } */
-export function handleError({ status, error, message }) {
+export function handleError({ status, error, message }): HandleClientError {
   const id = crypto.randomUUID();
 
   switch (status) {
@@ -13,5 +14,7 @@ export function handleError({ status, error, message }) {
       break;
   }
 
+  // @ts-ignore
+  // TODO: why is it not properly typed?
   return { id, message };
 }

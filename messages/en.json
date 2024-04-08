@@ -2,5 +2,10 @@
   "$schema": "https://inlang.com/schema/inlang-message-format",
   "aboutUs": "About us",
   "madeWith": "Made with ❤️",
-  "sourceCode": "Source"
+  "sourceCode": "Source",
+  "login": "Login",
+  "register": "Register",
+  "exampleName": "John Smith",
+  "exampleEmail": "johnsmith@gmail.com",
+  "examplePassword": "a-very-complicated-password"
 }

@@ -1,3 +1,5 @@
+import type { Logger } from "pino";
+
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 declare global {
@@ -6,11 +8,12 @@ declare global {
       id: string;
       message: string;
     }
-    // interface Locals {}
+    interface Locals {
+      requestID: string;
+      logger: Logger<string>;
+    }
     // interface PageData {}
     // interface PageState {}
     // interface Platform {}
   }
 }
-
-export {};
