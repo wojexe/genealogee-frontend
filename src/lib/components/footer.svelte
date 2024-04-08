@@ -1,5 +1,7 @@
 <script>
   import { goto } from "$app/navigation";
+  import { page } from "$app/stores";
+
   import { logout as requestLogout } from "$lib/api/auth.svelte";
   import * as m from "$paraglide/messages";
   import Button from "./ui/button/button.svelte";
@@ -13,7 +15,7 @@
     },
   ];
 
-  let buttonDisabled = $state(false);
+  const authenticatedRoute = $page.route.id?.startsWith("/(authenticated)");
 
   async function logout() {
     const { loggedOut, response, error } = await requestLogout();
@@ -24,15 +26,12 @@
       return goto("/");
     }
 
+    // TODO: send a toasts for below
     if (response) {
-      // TODO: send a toast
-      buttonDisabled = true;
       console.error(response);
     }
 
     if (error) {
-      // TODO: send a toast
-      buttonDisabled = true;
       console.error(error);
     }
   }
@@ -44,8 +43,8 @@
       <Button variant="link" href={link.href}>{link.text}</Button>
     {/each}
 
-    <Button disabled={buttonDisabled} variant="link" on:click={() => logout()}>
-      Log out
-    </Button>
+    {#if authenticatedRoute}
+      <Button variant="link" onclick={() => logout()}>Log out</Button>
+    {/if}
   </Content>
 </Card>
