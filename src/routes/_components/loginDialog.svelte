@@ -95,7 +95,7 @@
 
         {#if $message.description != null}
           <pre
-            class="text-[0.8rem] bg-neutral-800 rounded-lg flex justify-center
+            class="text-[0.8rem] text-primary bg-secondary rounded-lg flex justify-center
                    place-self-center px-2 py-1 border-red-700 border-solid border">{$message.description}</pre>
         {/if}
       </div>
