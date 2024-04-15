@@ -6,12 +6,8 @@
 
   const query = createQuery({
     queryKey: ["trees"],
-    queryFn: async () => (await dashboards(fetch)).trees,
-  });
-
-  $effect(() => {
-    console.log($query.data);
-    console.log($query.error);
+    queryFn: () => dashboards(fetch),
+    select: (data) => data.trees,
   });
 </script>
 

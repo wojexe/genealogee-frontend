@@ -20,8 +20,6 @@
   async function logout() {
     const { loggedOut, response, error } = await requestLogout();
 
-    console.log(response);
-
     if (loggedOut) {
       return goto("/");
     }

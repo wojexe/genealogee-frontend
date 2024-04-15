@@ -11,7 +11,7 @@
 </script>
 
 {#each dashboards as dashboard}
-  <Card class="min-w-56">
+  <Card class="min-w-64">
     <Header>
       <Title>🌳 {dashboard.name} family</Title>
     </Header>
@@ -20,3 +20,5 @@
     </Footer>
   </Card>
 {/each}
+
+

@@ -8,7 +8,7 @@
 
   const query = createQuery({
     queryKey: ["tree", treeID],
-    queryFn: async () => await dashboard(treeID, fetch),
+    queryFn: () => dashboard(treeID, fetch),
   });
 </script>
 
