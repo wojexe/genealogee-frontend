@@ -1,14 +1,14 @@
 <script>
   import { page } from "$app/stores";
 
-  import { dashboard } from "$lib/api/tree";
+  import { getDashboard } from "$lib/api/tree";
   import { createQuery } from "@tanstack/svelte-query";
 
   const treeID = $page.params.id;
 
   const query = createQuery({
     queryKey: ["tree", treeID],
-    queryFn: () => dashboard(treeID, fetch),
+    queryFn: () => getDashboard(treeID, fetch),
   });
 </script>
 

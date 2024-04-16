@@ -1,4 +1,4 @@
-import { dashboard } from "$lib/api/tree";
+import { getDashboard } from "$lib/api/tree";
 
 import type { PageLoad } from "./$types";
 
@@ -7,6 +7,6 @@ export const load: PageLoad = async ({ params, fetch, parent }) => {
 
   await queryClient.prefetchQuery({
     queryKey: ["tree", params.id],
-    queryFn: () => dashboard(params.id, fetch),
+    queryFn: () => getDashboard(params.id, fetch),
   });
 };

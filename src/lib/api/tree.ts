@@ -51,8 +51,28 @@ export type Tree = Output<typeof treeSchema>;
 //   routes.delete("trees", use: nukeAllTrees)
 // }
 
-export const dashboard = async (id: string, customFetch = fetch) => {
-  // TODO: validate if `id` is a valid UUID with valibot
+export const createTree = async (customFetch = fetch) => {
+  return await customFetch(`${baseURL}/tree/create`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  })
+    .then((response) =>
+      response.ok ? response : Promise.reject(new Error(response.statusText)),
+    )
+    .then(async (response) => await response.json())
+    .then((data) => parse(treeSchema, data));
+};
+
+export type Dashboard = Tree;
+
+export const getDashboard = async (
+  id: string,
+  customFetch = fetch,
+): Promise<Dashboard> => {
+  parse(string([uuid()]), id);
 
   return await customFetch(`${baseURL}/tree/${id}`, {
     method: "GET",
@@ -72,7 +92,11 @@ const dashboardsSchema = object({
   trees: array(treeSchema),
 });
 
-export const dashboards = async (customFetch = fetch) => {
+export type Dashboards = Output<typeof dashboardsSchema>;
+
+export const getDashboards = async (
+  customFetch = fetch,
+): Promise<Dashboards> => {
   return await customFetch(`${baseURL}/trees`, {
     method: "GET",
     headers: {

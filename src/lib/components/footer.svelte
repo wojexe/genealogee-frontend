@@ -35,7 +35,7 @@
   }
 </script>
 
-<Card class="bg-accent w-fit flex flex-row self-center rounded-full">
+<Card class="bg-secondary w-fit flex flex-row self-center rounded-full">
   <Content class="p-2">
     {#each links as link}
       <Button variant="link" href={link.href}>{link.text}</Button>

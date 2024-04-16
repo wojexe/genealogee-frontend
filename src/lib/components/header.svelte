@@ -37,7 +37,7 @@
   {/if}
 
   <Card
-    class="col-start-2 bg-accent w-fit block flex-row self-center rounded-full"
+    class="col-start-2 bg-secondary w-fit block flex-row self-center rounded-full"
   >
     <Content class="p-4 px-8">Genealogee 🌳</Content>
   </Card>
