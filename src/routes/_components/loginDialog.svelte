@@ -1,55 +1,55 @@
 <script lang="ts">
-  import * as m from "$paraglide/messages";
+import * as m from "$paraglide/messages";
 
-  import { goto } from "$app/navigation";
+import { goto } from "$app/navigation";
 
-  import { defaults, superForm } from "sveltekit-superforms";
-  import { valibot } from "sveltekit-superforms/adapters";
+import { defaults, superForm } from "sveltekit-superforms";
+import { valibot } from "sveltekit-superforms/adapters";
 
-  import { login } from "$lib/api/auth";
+import { login } from "$lib/api/auth";
 
-  import { loginSchema } from "./loginSchema";
+import { loginSchema } from "./loginSchema";
 
-  import { Button } from "$lib/components/ui/button";
-  import { Content, Header, Title, Footer } from "$lib/components/ui/dialog";
-  import { Control, Label, Field, FieldErrors } from "$lib/components/ui/form";
-  import { Input } from "$lib/components/ui/input";
+import { Button } from "$lib/components/ui/button";
+import { Content, Header, Title, Footer } from "$lib/components/ui/dialog";
+import { Control, Label, Field, FieldErrors } from "$lib/components/ui/form";
+import { Input } from "$lib/components/ui/input";
 
-  const data = defaults(valibot(loginSchema));
+const data = defaults(valibot(loginSchema));
 
-  const form = superForm(data, {
-    SPA: true,
-    resetForm: false,
-    validators: valibot(loginSchema),
-    onUpdate: async ({ form }) => {
-      if (!form.valid) return;
+const form = superForm(data, {
+  SPA: true,
+  resetForm: false,
+  validators: valibot(loginSchema),
+  onUpdate: async ({ form }) => {
+    if (!form.valid) return;
 
-      const { loggedIn, response, error } = await login(
-        form.data.email,
-        form.data.password
-      );
+    const { loggedIn, response, error } = await login(
+      form.data.email,
+      form.data.password,
+    );
 
-      if (loggedIn) {
-        return goto("/dashboards");
-      }
+    if (loggedIn) {
+      return goto("/dashboards");
+    }
 
-      if (error) {
-        form.message = {
-          error: "Unable to send request to server",
-          description: (error as TypeError).message,
-        };
-      } else {
-        form.message = {
-          error: response?.statusText,
-          description: (await response?.json()).reason,
-        };
-      }
+    if (error) {
+      form.message = {
+        error: "Unable to send request to server",
+        description: (error as TypeError).message,
+      };
+    } else {
+      form.message = {
+        error: response?.statusText,
+        description: (await response?.json())?.reason,
+      };
+    }
 
-      console.error(error);
-    },
-  });
+    console.error(error);
+  },
+});
 
-  let { form: formData, message, enhance } = form;
+let { form: formData, message, enhance } = form;
 </script>
 
 <Content class="sm:max-w-[425px]">

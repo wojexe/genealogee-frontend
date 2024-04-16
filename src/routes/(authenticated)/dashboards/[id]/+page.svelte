@@ -1,15 +1,15 @@
 <script>
-  import { page } from "$app/stores";
+import { page } from "$app/stores";
 
-  import { getDashboard } from "$lib/api/tree";
-  import { createQuery } from "@tanstack/svelte-query";
+import { getDashboard } from "$lib/api/tree";
+import { createQuery } from "@tanstack/svelte-query";
 
-  const treeID = $page.params.id;
+const treeID = $page.params.id;
 
-  const query = createQuery({
-    queryKey: ["tree", treeID],
-    queryFn: () => getDashboard(treeID, fetch),
-  });
+const query = createQuery({
+  queryKey: ["tree", treeID],
+  queryFn: () => getDashboard(treeID, fetch),
+});
 </script>
 
 <span class="text-xs">Dashboard#{treeID}</span>

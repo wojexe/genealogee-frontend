@@ -1,5 +1,5 @@
 <script>
-  import { page } from "$app/stores";
+import { page } from "$app/stores";
 </script>
 
 <h1 class="text-4xl uppercase">An error occured</h1>

@@ -1,7 +1,7 @@
 <script>
-  import { cn } from "$lib/utils";
+import { cn } from "$lib/utils";
 
-  export let className = "";
+export let className = "";
 </script>
 
 <svg

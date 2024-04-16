@@ -1,16 +1,16 @@
 <script lang="ts">
-  import type { HTMLAttributes } from "svelte/elements";
-  import { cn } from "$lib/utils.js";
+import type { HTMLAttributes } from "svelte/elements";
+import { cn } from "$lib/utils.js";
 
-  type $$Props = HTMLAttributes<HTMLDivElement> & {
-		as?: string;
-	}
+type $$Props = HTMLAttributes<HTMLDivElement> & {
+  as?: string;
+};
 
-  let className: $$Props["class"] = undefined;
-  export { className as class };
+let className: $$Props["class"] = undefined;
+export { className as class };
 
-  let tagName = "div";
-  export { tagName as as };
+let tagName = "div";
+export { tagName as as };
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->

@@ -1,4 +1,5 @@
-import type { Button as ButtonPrimitive } from "bits-ui";
+// biome-ignore lint/style/useImportType: <explanation>
+import { Button as ButtonPrimitive } from "bits-ui";
 import { tv, type VariantProps } from "tailwind-variants";
 import Root from "./button.svelte";
 

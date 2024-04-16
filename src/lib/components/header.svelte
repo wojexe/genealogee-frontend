@@ -1,26 +1,26 @@
 <script lang="ts">
-  import { page } from "$app/stores";
+import { page } from "$app/stores";
 
-  import { spring } from "svelte/motion";
+import { spring } from "svelte/motion";
 
-  import { ArrowLeft } from "svelte-radix";
-  import { Root as Card, Content } from "$lib/components/ui/card";
-  import { Button } from "./ui/button";
+import { ArrowLeft } from "svelte-radix";
+import { Root as Card, Content } from "$lib/components/ui/card";
+import { Button } from "./ui/button";
 
-  const scale = spring(1);
+const scale = spring(1);
 
-  const navigateBack = () => window.history.back();
+const navigateBack = () => window.history.back();
 
-  const isBaseRoute = () => {
-    const route = $page.route.id;
+const isBaseRoute = () => {
+  const route = $page.route.id;
 
-    if (!route) return false;
+  if (!route) return false;
 
-    const base = "/";
-    const baseAuthenticated = "/(authenticated)/dashboards";
+  const base = "/";
+  const baseAuthenticated = "/(authenticated)/dashboards";
 
-    return [base, baseAuthenticated].includes(route);
-  };
+  return [base, baseAuthenticated].includes(route);
+};
 </script>
 
 <header class="w-full grid grid-cols-[1fr_fit-content(100%)_1fr] gap-3">

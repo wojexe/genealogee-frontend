@@ -1,11 +1,11 @@
 <script lang="ts" context="module">
-  import * as m from "$paraglide/messages";
+import * as m from "$paraglide/messages";
 
-  import { Dialog, Trigger } from "$lib/components/ui/dialog";
-  import { buttonVariants } from "$lib/components/ui/button";
+import { Dialog, Trigger } from "$lib/components/ui/dialog";
+import { buttonVariants } from "$lib/components/ui/button";
 
-  import LoginDialog from "./_components/loginDialog.svelte";
-  import RegisterDialog from "./_components/registerDialog.svelte";
+import LoginDialog from "./_components/loginDialog.svelte";
+import RegisterDialog from "./_components/registerDialog.svelte";
 </script>
 
 <!-- FIXME: content shift in dialogs -->
