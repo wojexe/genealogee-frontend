@@ -1,63 +1,71 @@
+<script context="module" lang="ts">
+  import { createTree, getDashboards, type Dashboards } from "$lib/api/tree";
+  import { createMutation, createQuery } from "@tanstack/svelte-query";
+</script>
+
 <script lang="ts">
-import DashboardList from "./_components/dashboardList.svelte";
+  import DashboardList from "./_components/dashboardList.svelte";
 
-import {
-  createTree,
-  getDashboards,
-  type Dashboards,
-  type Tree,
-} from "$lib/api/tree";
-import { createMutation, createQuery } from "@tanstack/svelte-query";
+  import { Plus } from "svelte-radix";
+  import { Card, Content } from "$lib/components/ui/card";
+  import { Button } from "$lib/components/ui/button";
 
-import { Card, Content } from "$lib/components/ui/card";
-import { Button } from "$lib/components/ui/button";
+  const { data } = $props();
+  const queryClient = data.queryClient;
 
-import { Plus } from "svelte-radix";
+  const dashboardsQuery = createQuery({
+    queryKey: ["trees"],
+    queryFn: () => getDashboards(fetch),
+    select: (data) => data.trees,
+  });
 
-const { data } = $props();
-const queryClient = data.queryClient;
+  const createDashboardMutation = createMutation({
+    mutationFn: (name: string | undefined) => createTree(name),
+    onMutate: async (name) => {
+      await queryClient.cancelQueries({ queryKey: ["trees"] });
 
-const dashboardsQuery = createQuery({
-  queryKey: ["trees"],
-  queryFn: () => getDashboards(fetch),
-  select: (data) => data.trees,
-});
+      const previousTrees =
+        queryClient.getQueryData<Dashboards>(["trees"])?.trees ?? [];
 
-const dashboardMutation = createMutation({
-  mutationFn: () => createTree(),
-  onMutate: async () => {
-    await queryClient.cancelQueries({ queryKey: ["trees"] });
+      const temporaryID = `temp-${crypto.randomUUID()}`;
 
-    const previousTrees = queryClient.getQueryData<Array<Tree>>(["trees"]);
+      const temporaryTree = {
+        id: temporaryID,
+        creatorID: crypto.randomUUID(), // FIXME: get from auth (login and use svelte-query)
+        name: name ?? "",
+        people: [],
+        families: [],
+        snapshotIDs: [],
+      };
 
-    // FIXME
-    queryClient.setQueryData<Dashboards>(["trees"], (old) => {
-      trees: [
-        ...(old?.trees ?? []),
-        {
-          // TODO: use more sensible values for new trees
-          id: crypto.randomUUID(),
-          creatorID: crypto.randomUUID(), // TODO: get from auth (login and use svelte-query)
-          name: "temporary",
-          people: [],
-          families: [],
-          snapshotIDs: [],
-        },
-      ];
-    });
+      queryClient.setQueryData<Dashboards>(["trees"], (old) => ({
+        trees: [...(old?.trees ?? []), temporaryTree],
+      }));
 
-    return { previousTrees };
-  },
-  onError: (err: any, variables: any, context: any) => {
-    console.log(err);
-    if (context?.previousTrees) {
-      queryClient.setQueryData<Array<Tree>>(["trees"], context.previousTrees);
-    }
-  },
-  onSettled: () => {
-    queryClient.invalidateQueries({ queryKey: ["trees"] });
-  },
-});
+      return { previousTrees, temporaryID };
+    },
+    onError: (_err, _id, context) => {
+      if (context?.previousTrees) {
+        queryClient.setQueryData<Dashboards>(["trees"], {
+          trees: context.previousTrees,
+        });
+      }
+    },
+    onSettled: async (newTree, _err, _variables, context) => {
+      if (newTree == null) {
+        return await queryClient.invalidateQueries({ queryKey: ["trees"] });
+      }
+
+      // Use the response => save a potentially expensive request
+      queryClient.setQueryData<Dashboards>(["trees"], (old) => ({
+        trees: [
+          ...(old?.trees.filter((tree) => tree.id != context?.temporaryID) ??
+            []),
+          newTree,
+        ],
+      }));
+    },
+  });
 </script>
 
 {#if $dashboardsQuery.isPending}
@@ -77,8 +85,8 @@ const dashboardMutation = createMutation({
 <Button
   variant="outline"
   class="flex gap-2"
-  disabled={$dashboardMutation.isPending}
-  onclick={() => $dashboardMutation.mutate("")}
+  disabled={$createDashboardMutation.isPending}
+  on:click={() => $createDashboardMutation.mutate(undefined)}
 >
   <Plus class="h-5 w-5" />
   New dashboard

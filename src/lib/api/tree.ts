@@ -51,13 +51,47 @@ export type Tree = Output<typeof treeSchema>;
 //   routes.delete("trees", use: nukeAllTrees)
 // }
 
-export const createTree = async (customFetch = fetch) => {
+export const deleteTree = async (
+  treeID: string,
+  customFetch = fetch,
+): Promise<void> => {
+  parse(string([uuid()]), treeID);
+
+  const body = {
+    treeID,
+  };
+
+  return await customFetch(`${baseURL}/tree/${treeID}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify(body),
+  }).then((response) =>
+    response.ok
+      ? (null as never)
+      : Promise.reject(new Error(response.statusText)),
+  );
+};
+
+export const createTree = async (
+  name: string | undefined = undefined,
+  rootFamilyID = null,
+  customFetch = fetch,
+) => {
+  const body = {
+    name: name ?? "",
+    rootFamilyID,
+  };
+
   return await customFetch(`${baseURL}/tree/create`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     credentials: "include",
+    body: JSON.stringify(body),
   })
     .then((response) =>
       response.ok ? response : Promise.reject(new Error(response.statusText)),
@@ -76,9 +110,6 @@ export const getDashboard = async (
 
   return await customFetch(`${baseURL}/tree/${id}`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
     credentials: "include",
   })
     .then((response) =>
@@ -99,9 +130,6 @@ export const getDashboards = async (
 ): Promise<Dashboards> => {
   return await customFetch(`${baseURL}/trees`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
     credentials: "include",
   })
     .then((response) =>

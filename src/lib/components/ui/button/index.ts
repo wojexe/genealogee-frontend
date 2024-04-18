@@ -12,6 +12,8 @@ const buttonVariants = tv({
         "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
       outline:
         "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
+      destructive_outline:
+        "border border-destructive bg-background shadow-sm hover:bg-destructive hover:text-destructive-foreground",
       secondary:
         "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
       ghost: "hover:bg-accent hover:text-accent-foreground",
