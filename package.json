@@ -12,8 +12,9 @@
     "test:integration": "playwright test",
     "test:unit": "vitest",
     "postinstall": "paraglide-js compile --project ./project.inlang",
-    "format": "biome format --write ./*.{js,json} ./src ./tests",
-    "lint": "biome lint ./*.{js,json} ./src/{lib,routes} ./src/*.{html,ts,pcss} ./tests"
+    "biome:format": "biome format --write ./*.{js,json} ./src/{lib,routes} ./src/*.{html,ts,pcss} ./tests",
+    "biome:lint": "biome lint --apply ./*.{js,json} ./src/{lib,routes} ./src/*.{html,ts,pcss} ./tests",
+    "biome:check": "biome check --apply ./*.{js,json} ./src/{lib,routes} ./src/*.{html,ts,pcss} ./tests"
   },
   "devDependencies": {
     "@biomejs/biome": "1.7.0",
