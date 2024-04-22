@@ -1,6 +1,6 @@
 // biome-ignore lint/style/useImportType: <explanation>
 import { Button as ButtonPrimitive } from "bits-ui";
-import { tv, type VariantProps } from "tailwind-variants";
+import { type VariantProps, tv } from "tailwind-variants";
 import Root from "./button.svelte";
 
 const buttonVariants = tv({
@@ -24,6 +24,7 @@ const buttonVariants = tv({
       sm: "h-8 rounded-md px-3 text-xs",
       lg: "h-10 rounded-md px-8",
       icon: "h-9 w-9",
+      content: "h-auto w-auto rounded-md",
     },
   },
   defaultVariants: {

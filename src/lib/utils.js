@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
 import { cubicOut } from "svelte/easing";
+import { twMerge } from "tailwind-merge";
 
 /** @param {string[]} inputs */
 export function cn(...inputs) {

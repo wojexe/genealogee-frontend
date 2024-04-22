@@ -1,6 +1,8 @@
 // Schemas
 
-import { object, array, string, uuid } from "valibot";
+import { type Output, array, object, string, uuid } from "valibot";
+
+export type Family = Output<typeof familySchema>;
 
 export const familySchema = object({
   id: string([uuid()]),

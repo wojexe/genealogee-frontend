@@ -1,4 +1,4 @@
-import { object, email, string, never, maxLength, minLength } from "valibot";
+import { email, maxLength, minLength, never, object, string } from "valibot";
 
 export const loginSchema = object(
   {

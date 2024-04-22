@@ -1,24 +1,26 @@
 import { baseURL } from "$lib/api";
 
-import { personSchema } from "$lib/api/person";
 import { familySchema } from "$lib/api/family";
+import { personSchema } from "$lib/api/person";
 
 import {
-  object,
-  uuid,
-  string,
-  optional,
-  array,
-  parse,
   type Output,
+  array,
+  object,
+  optional,
+  parse,
+  string,
+  uuid,
 } from "valibot";
 
 export const treeSchema = object({
   id: string([uuid()]),
   creatorID: string([uuid()]),
   name: string(),
+
   people: array(personSchema),
   families: array(familySchema),
+
   rootFamilyID: optional(string([uuid()])),
   snapshotIDs: array(string([uuid()])),
 });

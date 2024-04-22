@@ -1,14 +1,17 @@
 // Schemas
 
 import {
-  object,
-  string,
-  uuid,
-  optional,
+  type Output,
+  coerce,
   date,
   nullable,
-  coerce,
+  object,
+  optional,
+  string,
+  uuid,
 } from "valibot";
+
+export type Dates = Output<typeof datesSchema>;
 
 export const datesSchema = object({
   birth: nullable(coerce(date(), (input) => new Date(input as string))),
@@ -17,6 +20,8 @@ export const datesSchema = object({
   deathCustom: nullable(string()),
 });
 
+export type Person = Output<typeof personSchema>;
+
 export const personSchema = object({
   id: string([uuid()]),
   creatorID: string([uuid()]),
@@ -24,7 +29,7 @@ export const personSchema = object({
   givenNames: string(),
   familyName: string(),
   birthName: optional(string()),
-  dateOf: datesSchema,
+  dateOf: optional(datesSchema),
   familyID: optional(string([uuid()])),
   parentFamilyID: optional(string([uuid()])),
 });

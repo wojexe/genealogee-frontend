@@ -1,7 +1,6 @@
 <script lang="ts">
 import type { HTMLAttributes } from "svelte/elements";
 import { cn } from "$lib/utils.js";
-  import { slide } from "svelte/transition";
 
 type $$Props = HTMLAttributes<HTMLDivElement> & {
   as?: string;
@@ -27,8 +26,6 @@ export { tagName as as };
   on:focusout
   on:mouseenter
   on:mouseleave
-  in:slide
-  out:slide
 >
   <slot />
 </svelte:element>

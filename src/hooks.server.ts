@@ -1,11 +1,11 @@
-import { redirect, type Handle, type HandleServerError } from "@sveltejs/kit";
+import { type Handle, type HandleServerError, redirect } from "@sveltejs/kit";
 
 import { error as svelteError } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 
+import { me } from "$lib/api/auth";
 import { i18n } from "$lib/i18n";
 import { logger } from "$lib/server/logger";
-import { me } from "$lib/api/auth";
 
 /// SvelteKit server error handling
 
