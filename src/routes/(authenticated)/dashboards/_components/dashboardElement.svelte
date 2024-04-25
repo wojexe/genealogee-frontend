@@ -1,4 +1,8 @@
 <script context="module" lang="ts">
+  import { Trash } from "svelte-radix";
+  import { Button } from "$lib/components/ui/button";
+  import { Card, Footer, Header, Title } from "$lib/components/ui/card";
+
   import { deleteTree, type Dashboard, type Dashboards } from "$lib/api/tree";
   import { useQueryClient, createMutation } from "@tanstack/svelte-query";
 
@@ -8,10 +12,6 @@
 </script>
 
 <script lang="ts">
-  import { Trash } from "svelte-radix";
-  import { Button } from "$lib/components/ui/button";
-  import { Card, Footer, Header, Title } from "$lib/components/ui/card";
-
   let { dashboard }: Props = $props();
 
   const queryClient = useQueryClient();

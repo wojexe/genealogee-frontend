@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script context="module" lang="ts">
 import * as m from "$paraglide/messages";
 
 import { Dialog, Trigger } from "$lib/components/ui/dialog";

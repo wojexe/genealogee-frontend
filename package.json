@@ -38,10 +38,12 @@
   "type": "module",
   "dependencies": {
     "@inlang/paraglide-js-adapter-sveltekit": "^0.5.10",
+    "@internationalized/date": "^3.5.2",
     "@tanstack/svelte-query": "^5.28.4",
-    "bits-ui": "^0.21.1",
+    "bits-ui": "^0.21.4",
     "clsx": "^2.1.0",
     "formsnap": "^1.0.0",
+    "lucide-svelte": "^0.373.0",
     "mode-watcher": "^0.3.0",
     "pino": "^8.19.0",
     "pino-pretty": "^10.3.1",

@@ -7,8 +7,6 @@
   };
 
   let { dashboards }: Props = $props();
-
-  $inspect(dashboards)
 </script>
 
 {#each dashboards as dashboard (dashboard.id)}

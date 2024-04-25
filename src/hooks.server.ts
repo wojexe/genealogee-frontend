@@ -88,6 +88,9 @@ const handleAuth: Handle = async ({ event, resolve }) => {
         "Authentication failed - fetch error",
       );
 
+      // TODO: inform the user about the error
+      redirect(302, "/");
+
       svelteError(500, {
         id: crypto.randomUUID(),
         message: "Internal server error",

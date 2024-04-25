@@ -58,3 +58,6 @@ export const flyAndScale = (
     easing: cubicOut,
   };
 };
+
+// @ts-ignore
+export const xor = (a, b) => !!a !== !!b;

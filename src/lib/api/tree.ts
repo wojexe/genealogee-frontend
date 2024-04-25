@@ -26,6 +26,7 @@ export const treeSchema = object({
 });
 
 export type Tree = Output<typeof treeSchema>;
+export type Dashboard = Tree;
 
 // API
 
@@ -81,7 +82,7 @@ export const createTree = async (
   name: string | undefined = undefined,
   rootFamilyID = null,
   customFetch = fetch,
-) => {
+): Promise<Tree> => {
   const body = {
     name: name ?? "",
     rootFamilyID,
@@ -101,8 +102,6 @@ export const createTree = async (
     .then(async (response) => await response.json())
     .then((data) => parse(treeSchema, data));
 };
-
-export type Dashboard = Tree;
 
 export const getDashboard = async (
   id: string,
