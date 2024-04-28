@@ -1,6 +1,7 @@
 <script context="module" lang="ts">
   import type { Tree } from "$lib/genealogee";
-  import { Card, Content, Footer } from "$lib/components/ui/card";
+  import { Card, Content } from "$lib/components/ui/card";
+  import * as ContextMenu from "$lib/components/ui/context-menu/index.js";
 
   type Props = {
     personID: string;
@@ -18,21 +19,26 @@
   let person = $derived(tree.people.get(personID)!);
 </script>
 
-<Card class="min-w-48 max-w-82 break-words flex flex-col">
-  <Content class="pb-2">
-    {person.givenNames} <b>{person.familyName}-{person.birthName}</b>
-  </Content>
-  <Footer class="pt-0 flex gap-2 place-content-end">
-    <!-- TODO: make editable and deletable -->
-    <Button variant="ghost" size="icon" class="opacity-40 hover:opacity-100">
+<ContextMenu.Root>
+  <ContextMenu.Trigger>
+    <Card class="min-w-48 max-w-82 break-words flex flex-col">
+      <Content>
+        {person.givenNames} <b>{person.familyName}-{person.birthName}</b>
+      </Content>
+    </Card>
+  </ContextMenu.Trigger>
+
+  <!-- TODO: make editable and deletable -->
+  <ContextMenu.Content>
+    <ContextMenu.Item>
       <Pencil />
-    </Button>
-    <Button
-      variant="destructive_ghost"
-      size="icon"
-      class="opacity-40 hover:opacity-100"
+      Edit
+    </ContextMenu.Item>
+    <ContextMenu.Item
+      class="data-[highlighted]:bg-destructive data-[highlighted]:text-fg-destructive"
     >
       <Trash />
-    </Button>
-  </Footer>
-</Card>
+      Delete
+    </ContextMenu.Item>
+  </ContextMenu.Content>
+</ContextMenu.Root>
