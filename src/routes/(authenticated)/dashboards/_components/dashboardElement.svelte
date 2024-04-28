@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  import { Trash } from "svelte-radix";
+  import Trash from "lucide-svelte/icons/trash";
   import { Button } from "$lib/components/ui/button";
   import { Card, Footer, Header, Title } from "$lib/components/ui/card";
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Calendar as CalendarPrimitive } from "bits-ui";
-	import ChevronLeft from "svelte-radix/ChevronLeft.svelte";
+	import ChevronLeft from "lucide-svelte/icons/chevron-left";
 	import { buttonVariants } from "$lib/components/ui/button/index.js";
 	import { cn } from "$lib/utils.js";
 
@@ -16,7 +16,7 @@
 	class={cn(
 		buttonVariants({ variant: "outline" }),
 		"h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
-		className
+		className!
 	)}
 	{...$$restProps}
 	let:builder

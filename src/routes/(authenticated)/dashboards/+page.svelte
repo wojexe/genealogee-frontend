@@ -6,7 +6,7 @@
 <script lang="ts">
   import DashboardList from "./_components/dashboardList.svelte";
 
-  import { Plus } from "svelte-radix";
+  import Plus from "lucide-svelte/icons/plus";
   import { Card, Content } from "$lib/components/ui/card";
   import { Button } from "$lib/components/ui/button";
 

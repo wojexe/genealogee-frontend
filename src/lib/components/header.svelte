@@ -3,7 +3,7 @@ import { page } from "$app/stores";
 
 import { spring } from "svelte/motion";
 
-import { ArrowLeft } from "svelte-radix";
+import ArrowLeft from "lucide-svelte/icons/arrow-left";
 import { Root as Card, Content } from "$lib/components/ui/card";
 import { Button } from "./ui/button";
 
