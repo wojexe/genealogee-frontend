@@ -28,7 +28,7 @@
     class="{buttonVariants({
       variant: 'outline',
       size: 'content',
-    })} flex flex-row gap-2 pl-3 pr-4 py-3 text-sm self-center opacity-50"
+    })} flex flex-row gap-2 pl-3 pr-4 py-3 text-sm self-center opacity-40 hover:bg-background hover:opacity-100 transition-opacity"
   >
     <PlusCircle />
     {`Add ${who}`}

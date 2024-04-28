@@ -34,7 +34,7 @@
 {:else if $query.isError}
   <span>Error: {$query.error.message}</span>
 {:else}
-  <main class="flex flex-col items-center justify-items-center gap-6">
+  <main class="flex flex-col items-center justify-items-center gap-8">
     <Title title={$query.data.name} />
     <Root tree={$query.data} />
   </main>

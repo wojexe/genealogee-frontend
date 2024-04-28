@@ -4,6 +4,7 @@ import type { Tree, Family } from "$lib/genealogee";
 type Props = {
   familyID: Family["id"];
   tree: Tree;
+  rootFamilyElement?: any;
 };
 </script>
 
@@ -25,23 +26,9 @@ type Props = {
   const children = $derived(family!.children);
 
   const isParent = (personID: string) => tree.parents.has(personID);
-
-  // Add person:
-  //   - as a partner for a person
-  //      + isParent
-  //          ? this adds the partner to partners in the family
-  //          : this creates a new family for the person
-  //      * NEEDED: treeID, personID
-  //   - as a child for a family
-  //      + this simply adds the person to the children of a family
-  //      * NEEDED: treeID, familyID
-
-  //   - to an empty tree (not this file)
-  //      + this creates a new root family for the tree
-  //      * NEEDED: treeID
 </script>
 
-<div class="grid auto-cols-auto grid-flow-row gap-24 place-items-center ">
+<div class="w-fit grid auto-cols-auto grid-flow-row gap-24 place-items-center hover:outline hover:outline-red-500/25">
   <div class="row-start-1 flex flex-row gap-16 place-items-end">
     {#each children as personID}
       {#if isParent(personID)}
@@ -55,7 +42,7 @@ type Props = {
       {/if}
     {/each}
 
-    <div class="relative bottom-[46px]">
+    <div class="mb-3">
       <AddChild {tree} familyID="{family!.id}" />
     </div>
   </div>
