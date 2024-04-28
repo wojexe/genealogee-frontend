@@ -41,8 +41,8 @@ type Props = {
   //      * NEEDED: treeID
 </script>
 
-<div class="grid auto-cols-auto grid-flow-row gap-8">
-  <div class="row-start-1 flex flex-row gap-8">
+<div class="grid auto-cols-auto grid-flow-row gap-24 place-items-center ">
+  <div class="row-start-1 flex flex-row gap-16 place-items-end">
     {#each children as personID}
       {#if isParent(personID)}
         <svelte:self familyID={tree.parents.get(personID)!} {tree} />
@@ -55,13 +55,17 @@ type Props = {
       {/if}
     {/each}
 
-     <AddChild {tree} familyID="{family!.id}" />
+    <div class="relative bottom-[46px]">
+      <AddChild {tree} familyID="{family!.id}" />
+    </div>
   </div>
 
-  <div class="row-start-2 flex flex-row gap-2">
-    {#each parents as personID}
-      <Person {personID} {tree} />
-    {/each}
+  <div class="row-start-2 grid grid-cols-[1fr_fit-content(100%)_1fr] gap-2">
+    <div class="col-start-2 flex flex-row gap-2">
+      {#each parents as personID}
+        <Person {personID} {tree} />
+      {/each}
+    </div>
 
     <AddPartner {tree} personID={parents[0]} />
   </div>

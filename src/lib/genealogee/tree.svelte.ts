@@ -22,6 +22,8 @@ class Tree implements Omit<TreeType, "people" | "families"> {
   #snapshotIDs = $state<TreeType["snapshotIDs"]>([]);
 
   constructor(tree: TreeType) {
+    console.warn("NEW TREE CONSTRUCTED", tree.id);
+
     this.#id = tree.id;
     this.#creatorID = tree.creatorID;
     this.#name = tree.name;
@@ -36,8 +38,8 @@ class Tree implements Omit<TreeType, "people" | "families"> {
     for (const family of tree.families) {
       this.#families.set(family.id, new Family(family));
 
-      for (let [personID, familyID] of family.parents) {
-        this.#parents.set(personID, familyID);
+      for (let parentID of family.parents) {
+        this.#parents.set(parentID, family.id);
       }
     }
   }

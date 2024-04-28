@@ -8,17 +8,28 @@
     type CreatePersonInput,
   } from "$lib/api/person";
 
-  import { createMutation, useQueryClient } from "@tanstack/svelte-query";
+  import {
+    createMutation,
+    useQueryClient,
+  } from "@tanstack/svelte-query";
 
   import { Button } from "$lib/components/ui/button";
   import { Content, Header, Title, Footer } from "$lib/components/ui/dialog";
-  import { Control, Label, Field, Fieldset, FieldErrors } from "$lib/components/ui/form";
+  import {
+    Control,
+    Label,
+    Field,
+    Fieldset,
+    FieldErrors,
+  } from "$lib/components/ui/form";
   import { Input } from "$lib/components/ui/input";
 
   import type { Dashboard } from "$lib/api/tree";
+  import type { Tree } from "$lib/genealogee";
 
   type Props = {
     who: "first person" | "partner" | "child";
+    tree: Tree;
     treeID: string;
     familyID?: string;
     personID?: string;
@@ -26,7 +37,7 @@
 </script>
 
 <script lang="ts">
-  let { who, treeID, familyID, personID }: Props = $props();
+  let { who, tree, treeID, familyID, personID }: Props = $props();
 
   if (familyID != null && personID != null) {
     throw new Error("One of familyID and personID must be provided");
@@ -97,6 +108,14 @@
   const { form: formData, message, enhance } = form;
 
   $formData.treeID = treeID;
+
+  if (personID != null) {
+    $formData.partnerOf = personID;
+  } else if (familyID != null) {
+    const parentID = tree.families.get(familyID)!.parents[0];
+
+    $formData.childOf = parentID;
+  }
 </script>
 
 <Content class="sm:max-w-[425px]">
@@ -145,10 +164,7 @@
       <Field {form} name="dateOf.birth">
         <Control let:attrs>
           <Label>Birth date</Label>
-          <Input
-            {...attrs}
-            type="date"
-            bind:value={$formData.dateOf.birth} />
+          <Input {...attrs} type="date" bind:value={$formData.dateOf.birth} />
         </Control>
         <FieldErrors class="col-span-full" />
       </Field>
@@ -156,10 +172,7 @@
       <Field {form} name="dateOf.death">
         <Control let:attrs>
           <Label>Death date</Label>
-          <Input
-            {...attrs}
-            type="date"
-            bind:value={$formData.dateOf.death} />
+          <Input {...attrs} type="date" bind:value={$formData.dateOf.death} />
         </Control>
         <FieldErrors class="col-span-full" />
       </Field>

@@ -6,6 +6,7 @@
 
   import PlusCircle from "lucide-svelte/icons/circle-plus";
 
+  // TODO: handle custom styles?
   type Props = {
     who: "first person" | "partner" | "child";
     tree: Tree;
@@ -27,11 +28,11 @@
     class="{buttonVariants({
       variant: 'outline',
       size: 'content',
-    })} flex flex-col gap-1 px-6 py-3 text-sm self-center"
+    })} flex flex-row gap-2 pl-3 pr-4 py-3 text-sm self-center opacity-50"
   >
     <PlusCircle />
     {`Add ${who}`}
   </Trigger>
 
-  <AddPersonDialog {who} treeID={tree.id} {familyID} {personID} />
+  <AddPersonDialog {tree} {who} treeID={tree.id} {familyID} {personID} />
 </Dialog>
