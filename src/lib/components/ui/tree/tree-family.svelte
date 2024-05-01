@@ -39,7 +39,7 @@ type Props = {
             <Person {personID} {tree} />
           </div>
 
-          <AddPartner {tree} personID={parents[0]} />
+          <AddPartner {personID} {tree} />
         </div>
       {/if}
     {/each}
