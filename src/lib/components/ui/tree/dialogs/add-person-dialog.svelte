@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  import { defaults, superForm } from "sveltekit-superforms";
+  import { dateProxy, defaults, superForm } from "sveltekit-superforms";
   import { valibot } from "sveltekit-superforms/adapters";
 
   import {
@@ -8,10 +8,7 @@
     type CreatePersonInput,
   } from "$lib/api/person";
 
-  import {
-    createMutation,
-    useQueryClient,
-  } from "@tanstack/svelte-query";
+  import { createMutation, useQueryClient } from "@tanstack/svelte-query";
 
   import { Button } from "$lib/components/ui/button";
   import { Content, Header, Title, Footer } from "$lib/components/ui/dialog";
@@ -103,9 +100,10 @@
     },
   });
 
-  form.validateForm({ update: true });
-
   const { form: formData, message, enhance } = form;
+
+  const dateOfBirthProxy = dateProxy(form, "dateOf.birth", { format: "date" });
+  const dateOfDeathProxy = dateProxy(form, "dateOf.death", { format: "date" });
 
   $formData.treeID = treeID;
 
@@ -164,7 +162,7 @@
       <Field {form} name="dateOf.birth">
         <Control let:attrs>
           <Label>Birth date</Label>
-          <Input {...attrs} type="date" bind:value={$formData.dateOf.birth} />
+          <Input {...attrs} type="date" bind:value={$dateOfBirthProxy} />
         </Control>
         <FieldErrors class="col-span-full" />
       </Field>
@@ -172,7 +170,7 @@
       <Field {form} name="dateOf.death">
         <Control let:attrs>
           <Label>Death date</Label>
-          <Input {...attrs} type="date" bind:value={$formData.dateOf.death} />
+          <Input {...attrs} type="date" bind:value={$dateOfDeathProxy} />
         </Control>
         <FieldErrors class="col-span-full" />
       </Field>
@@ -183,12 +181,6 @@
         <div class="text-[0.8rem] font-medium text-center text-destructive">
           {$message.error}
         </div>
-
-        {#if $message.description != null}
-          <pre
-            class="text-[0.8rem] text-primary bg-secondary rounded-lg flex justify-center
-                   place-self-center px-2 py-1 border-red-700 border-solid border">{$message.description}</pre>
-        {/if}
       </div>
     {/if}
 

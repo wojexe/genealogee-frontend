@@ -11,7 +11,6 @@
 
 <script lang="ts">
   import { Pencil, Trash } from "lucide-svelte";
-  import { Button } from "../button";
 
   let { personID, tree }: Props = $props();
 

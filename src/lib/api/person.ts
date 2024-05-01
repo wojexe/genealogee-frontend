@@ -9,12 +9,9 @@ import {
   optional,
   string,
   uuid,
-  custom,
-  forward,
   parse,
 } from "valibot";
 
-import { xor } from "$lib/utils";
 import { baseURL } from "$lib/api";
 
 export type Dates = Output<typeof datesSchema>;
