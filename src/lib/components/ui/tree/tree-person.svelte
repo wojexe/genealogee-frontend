@@ -1,19 +1,24 @@
 <script context="module" lang="ts">
+  import { languageTag } from "$paraglide/runtime";
+
   import type { Person, Tree } from "$lib/genealogee";
-  import { Card, Content, Footer, Header } from "$lib/components/ui/card";
-  import * as ContextMenu from "$lib/components/ui/context-menu/index.js";
+
+  import { Card, Content, Header } from "$lib/components/ui/card";
+
   import * as Dialog from "$lib/components/ui/dialog";
+  import * as ContextMenu from "$lib/components/ui/context-menu";
 
   import { Pencil, Trash } from "lucide-svelte";
+
   import EditPersonDialog from "./dialogs/edit-person-dialog.svelte";
   import DeletePersonDialog from "./dialogs/delete-person-dialog.svelte";
-  import { languageTag } from "$paraglide/runtime";
 
   type Props = {
     personID: string;
     tree: Tree;
   };
 
+  // TODO: make URL have precedence over navigator language
   const dateFormatter = new Intl.DateTimeFormat(languageTag(), {
     day: "numeric",
     month: "long",
@@ -49,13 +54,13 @@
     <Content class="py-0 pb-3 px-5 flex flex-col text-nowrap text-sm opacity-60 group-hover:opacity-100 print:opacity-100 transition-opacity">
       {#if person.dateOf?.birth}
         <div class="flex flex-row justify-between">
-          ur. <span>{dateFormatter.format(person.dateOf.birth)}</span>
+          ur.&nbsp;<span>{dateFormatter.format(person.dateOf.birth)}</span>
         </div>
       {/if}
 
       {#if person.dateOf?.death}
         <div class="flex flex-row justify-between">
-          zm. <span>{dateFormatter.format(person.dateOf.death)}</span>
+          zm.&nbsp;<span>{dateFormatter.format(person.dateOf.death)}</span>
         </div>
       {/if}
     </Content>
