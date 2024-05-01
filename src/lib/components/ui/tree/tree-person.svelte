@@ -14,8 +14,6 @@
     tree: Tree;
   };
 
-  console.log("+++++++++++++++++++++" + languageTag())
-
   const dateFormatter = new Intl.DateTimeFormat(languageTag(), {
     day: "numeric",
     month: "long",
@@ -38,11 +36,13 @@
     <span class="text-sm text-center opacity-60 group-hover:opacity-100 print:opacity-100 transition-opacity">{person.givenNames}</span>
     <span class="text-lg font-bold">{person.familyName}</span>
 
-    <div class="flex flex-row items-baseline text-sm place-self-center">
-      <span class="whitespace-nowrap ml-[1ch]">z d.</span>
-      &nbsp;
-      <span class="text-sm font-semibold">{person.birthName}</span>
-    </div>
+    {#if person.birthName}
+      <div class="flex flex-row items-baseline text-sm place-self-center">
+        <span class="whitespace-nowrap ml-[1ch]">z d.</span>
+        &nbsp;
+        <span class="text-sm font-semibold">{person.birthName}</span>
+      </div>
+    {/if}
   </Header>
 
   {#if person.dateOf?.hasAnyDate()}
