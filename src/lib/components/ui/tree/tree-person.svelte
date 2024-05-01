@@ -35,7 +35,7 @@
       Edit
     </ContextMenu.Item>
     <ContextMenu.Item
-      class="data-[highlighted]:bg-destructive data-[highlighted]:text-fg-destructive"
+      class="data-[highlighted]:bg-destructive data-[highlighted]:text-destructive-foreground"
     >
       <Trash />
       Delete
