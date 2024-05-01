@@ -60,10 +60,6 @@
       {/if}
     </Content>
   {/if}
-
-  <!-- <Footer class="py-3 px-5">
-    footer
-  </Footer> -->
 {/snippet}
 
 <Dialog.Root>

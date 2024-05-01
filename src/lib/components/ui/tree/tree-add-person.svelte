@@ -21,19 +21,20 @@
   import AddPersonDialog from "./dialogs/add-person-dialog.svelte";
 
   let { who, tree, familyID, personID }: Props = $props();
+
+  let dialogOpen: boolean = $state(false);
 </script>
 
 <Tooltip.Root>
-  <Dialog.Root>
-    <Tooltip.Trigger class="flex self-center h-fit">
-      <Dialog.Trigger
-        class="{buttonVariants({
-          variant: 'outline',
-          size: 'content',
-        })} flex flex-row gap-2 p-3 text-sm self-center opacity-40 hover:bg-background hover:opacity-100 transition-opacity"
-      >
-        <PlusCircle />
-      </Dialog.Trigger>
+  <Dialog.Root bind:open={dialogOpen}>
+    <Tooltip.Trigger
+      class="{buttonVariants({
+        variant: 'outline',
+        size: 'content',
+      })} flex flex-row gap-2 p-3 text-sm self-center opacity-40 hover:bg-background hover:opacity-100 transition-opacity"
+      onclick={() => (dialogOpen = true)}
+    >
+      <PlusCircle />
     </Tooltip.Trigger>
 
     <AddPersonDialog {tree} {who} treeID={tree.id} {familyID} {personID} />
