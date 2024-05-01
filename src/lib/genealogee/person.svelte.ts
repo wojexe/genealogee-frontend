@@ -10,7 +10,7 @@ class Person implements PersonType {
   givenNames = $state<PersonType["givenNames"]>("");
   familyName = $state<PersonType["familyName"]>("");
   birthName = $state<PersonType["birthName"]>(undefined);
-  dateOf = $state<PersonType["dateOf"]>(undefined);
+  dateOf = $state<Dates | undefined>(undefined);
   familyID = $state<PersonType["familyID"]>(undefined);
   parentFamilyID = $state<PersonType["parentFamilyID"]>(undefined);
 
@@ -38,6 +38,10 @@ class Dates implements DatesType {
     this.birthCustom = dates?.birthCustom ?? null;
     this.death = dates?.death != null ? new Date(dates.death) : null;
     this.deathCustom = dates?.deathCustom ?? null;
+  }
+
+  public hasAnyDate() {
+    return this.birth != null || this.birthCustom != null || this.death != null || this.deathCustom != null;
   }
 }
 

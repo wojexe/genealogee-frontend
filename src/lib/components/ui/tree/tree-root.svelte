@@ -24,7 +24,7 @@ onMount(()=> {
 })
 </script>
 
-<div class="h-fit w-fit rounded-3xl overflow-hidden shadow-sm">
+<div class="h-fit w-fit rounded-3xl overflow-hidden shadow-sm place-content-center">
   <div bind:this={container} class="flex h-fit w-[90vw] overflow-auto rounded-3xl border border-red px-8 py-10">
     {#if tree.people.size === 0}
       <AddFirstPerson tree={tree} />
