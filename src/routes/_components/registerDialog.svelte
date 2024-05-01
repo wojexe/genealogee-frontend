@@ -1,54 +1,57 @@
 <script lang="ts">
-import * as m from "$paraglide/messages";
+  import * as m from "$paraglide/messages";
 
-import { defaults, superForm } from "sveltekit-superforms";
-import { valibot } from "sveltekit-superforms/adapters";
+  import { goto } from "$app/navigation";
 
-import { registerSchema } from "./registerSchema";
+  import { defaults, superForm } from "sveltekit-superforms";
+  import { valibot } from "sveltekit-superforms/adapters";
 
-import { Button } from "$lib/components/ui/button";
-import { Content, Header, Title, Footer } from "$lib/components/ui/dialog";
-import { Control, Label, Field, FieldErrors } from "$lib/components/ui/form";
-import { Input } from "$lib/components/ui/input";
-import { register } from "$lib/api/auth";
-import { goto } from "$app/navigation";
+  import { register } from "$lib/api/auth";
 
-const data = defaults(valibot(registerSchema));
+  import { registerSchema } from "./registerSchema";
 
-const form = superForm(data, {
-  SPA: true,
-  resetForm: false,
-  validators: valibot(registerSchema),
-  onUpdate: async ({ form }) => {
-    if (!form.valid) return;
+  import Spinner from "lucide-svelte/icons/rotate-cw";
+  import { Button } from "$lib/components/ui/button";
+  import { Content, Header, Title, Footer } from "$lib/components/ui/dialog";
+  import { Control, Label, Field, FieldErrors } from "$lib/components/ui/form";
+  import { Input } from "$lib/components/ui/input";
 
-    const { registered, response, error } = await register(
-      form.data.email,
-      form.data.name.trim(),
-      form.data.password,
-    );
+  const data = defaults(valibot(registerSchema));
 
-    if (registered) {
-      return goto("/dashboards");
-    }
+  const form = superForm(data, {
+    SPA: true,
+    resetForm: false,
+    validators: valibot(registerSchema),
+    onUpdate: async ({ form }) => {
+      if (!form.valid) return;
 
-    if (error) {
-      form.message = {
-        error: "Unable to send request to server",
-        description: (error as TypeError).message,
-      };
-    } else {
-      form.message = {
-        error: response?.statusText,
-        description: (await response?.json())?.reason,
-      };
-    }
+      const { registered, response, error } = await register(
+        form.data.email,
+        form.data.name.trim(),
+        form.data.password
+      );
 
-    console.error(error);
-  },
-});
+      if (registered) {
+        return goto("/dashboards");
+      }
 
-let { form: formData, message, enhance } = form;
+      if (error) {
+        form.message = {
+          error: "Unable to send request to server",
+          verbose: (error as TypeError).message,
+        };
+      } else {
+        form.message = {
+          error: (await response?.json())?.reason,
+          verbose: response?.statusText,
+        };
+      }
+
+      console.error(error);
+    },
+  });
+
+  let { form: formData, message, enhance, submitting } = form;
 </script>
 
 <Content class="sm:max-w-[425px]">
@@ -101,19 +104,28 @@ let { form: formData, message, enhance } = form;
     </Field>
 
     {#if $message && $message.error}
-      <div class="text-[0.8rem] font-medium text-center text-destructive">
-        {$message.error}
-      </div>
+      <div class="flex flex-col gap-y-2 mb-2">
+        <div class="text-[0.8rem] font-medium text-center text-destructive">
+          {$message.error}
+        </div>
 
-      {#if $message.description != null}
-        <pre
-        class="text-[0.8rem] text-primary bg-secondary rounded-lg flex justify-center
-               place-self-center px-2 py-1 border-red-700 border-solid border">{$message.description}</pre>
-      {/if}
+        <!--
+        {#if $message.verbose != null}
+          <pre
+            class="text-[0.8rem] text-primary bg-secondary rounded-lg flex justify-center
+                place-self-center px-2 py-1 border-red-700 border-solid border">{$message.verbose}</pre>
+        {/if}
+      -->
+      </div>
     {/if}
 
     <Footer>
-      <Button type="submit">Sign up</Button>
+      <Spinner
+        class="place-self-center animate-spin transition-all {$submitting
+          ? 'opacity-100'
+          : 'opacity-0'}"
+      />
+      <Button type="submit" disabled={$submitting}>Sign up</Button>
     </Footer>
   </form>
 </Content>

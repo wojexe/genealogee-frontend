@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import { goto } from "$app/navigation";
 import { page } from "$app/stores";
 
@@ -15,7 +15,7 @@ let links = [
   },
 ];
 
-const authenticatedRoute = $page.route.id?.startsWith("/(authenticated)");
+const authenticatedRoute = (routeID: string | null) => routeID?.startsWith("/(authenticated)");
 
 async function logout() {
   const { loggedOut, response, error } = await requestLogout();
@@ -41,7 +41,7 @@ async function logout() {
       <Button variant="link" href={link.href}>{link.text}</Button>
     {/each}
 
-    {#if authenticatedRoute}
+    {#if authenticatedRoute($page.route.id)}
       <Button variant="link" on:click={() => logout()}>Log out</Button>
     {/if}
   </Content>
