@@ -7,5 +7,7 @@
   "register": "Zarejestruj",
   "exampleName": "Jan Kowalski",
   "exampleEmail": "jankowalski@gmail.com",
-  "examplePassword": "bardzo-skomplikowane-haslo"
+  "examplePassword": "bardzo-skomplikowane-haslo",
+  "tree_untitled": "Bez nazwy",
+  "family_display_name": "Rodzina {name}"
 }

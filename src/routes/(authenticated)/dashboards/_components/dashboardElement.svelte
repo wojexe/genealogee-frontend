@@ -3,16 +3,17 @@
   import { Button } from "$lib/components/ui/button";
   import { Card, Footer, Header, Title } from "$lib/components/ui/card";
 
-  import { deleteTree, type Dashboard, type Dashboards } from "$lib/api/tree";
+  import type { Tree } from "$lib/genealogee";
+  import { deleteTree, type Dashboards } from "$lib/api/tree";
   import { useQueryClient, createMutation } from "@tanstack/svelte-query";
 
   type Props = {
-    dashboard: Dashboard;
+    tree: Tree;
   };
 </script>
 
 <script lang="ts">
-  let { dashboard }: Props = $props();
+  let { tree }: Props = $props();
 
   const queryClient = useQueryClient();
 
@@ -43,24 +44,20 @@
       await queryClient.invalidateQueries({ queryKey: ["tree", id] });
     },
   });
-
-  const dashboardName = $derived(
-    dashboard.name.length === 0 ? "Untitled" : dashboard.name
-  );
 </script>
 
 <Card class="min-w-64">
   <Header>
-    <Title>🌳 {dashboardName} family</Title>
+    <Title>🌳 {tree.name}</Title>
   </Header>
   <Footer class="gap-3 place-content-end">
     <Button
       variant="destructive_outline"
       size="icon"
-      on:click={() => $deleteDashboardMutation.mutate(dashboard.id)}
+      on:click={() => $deleteDashboardMutation.mutate(tree.id)}
     >
       <Trash />
     </Button>
-    <Button href={`/dashboards/${dashboard.id}`}>View</Button>
+    <Button href={`/dashboards/${tree.id}`}>View</Button>
   </Footer>
 </Card>

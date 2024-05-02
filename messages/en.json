@@ -7,5 +7,7 @@
   "register": "Register",
   "exampleName": "John Smith",
   "exampleEmail": "johnsmith@gmail.com",
-  "examplePassword": "a-very-complicated-password"
+  "examplePassword": "a-very-complicated-password",
+  "tree_untitled": "Untitled",
+  "family_display_name": "{name} family"
 }

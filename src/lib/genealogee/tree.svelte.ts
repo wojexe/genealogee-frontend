@@ -8,6 +8,8 @@ import { Person } from "$lib/genealogee/person.svelte";
 // biome-ignore lint/suspicious/noShadowRestrictedNames: Reactive map
 import { Map } from "svelte/reactivity";
 
+import * as m from "$paraglide/messages";
+
 class Tree implements Omit<TreeType, "people" | "families"> {
   #id;
   #creatorID;
@@ -22,8 +24,6 @@ class Tree implements Omit<TreeType, "people" | "families"> {
   #snapshotIDs = $state<TreeType["snapshotIDs"]>([]);
 
   constructor(tree: TreeType) {
-    console.warn("NEW TREE CONSTRUCTED", tree.id);
-
     this.#id = tree.id;
     this.#creatorID = tree.creatorID;
     this.#name = tree.name;
@@ -36,12 +36,14 @@ class Tree implements Omit<TreeType, "people" | "families"> {
     }
 
     for (const family of tree.families) {
-      this.#families.set(family.id, new Family(family));
+      this.#families.set(family.id, new Family(family, this));
 
       for (let parentID of family.parents) {
         this.#parents.set(parentID, family.id);
       }
     }
+
+    console.log(`Tree#${tree.id} constructed`);
   }
 
   get id() {
@@ -58,13 +60,22 @@ class Tree implements Omit<TreeType, "people" | "families"> {
     }
 
     let name: string;
-    if (this.#rootFamilyID) {
-      name = "rootFamilyID's";
+
+    if (this.#rootFamilyID == null) {
+      name = m.tree_untitled().toLowerCase();
     } else {
-      name = "Untitled";
+      const rootFamily = this.families.get(this.#rootFamilyID);
+
+      if (rootFamily == null) throw new Error("Root family not found");
+
+      name = `${rootFamily.joinedParentNames()}'s`;
     }
 
-    return `${name} family`;
+    console.log(m.family_display_name({ name }));
+
+    // Capitalize first letter
+    const displayName = m.family_display_name({ name });
+    return displayName[0].toUpperCase() + displayName.slice(1);
   }
 
   get people() {

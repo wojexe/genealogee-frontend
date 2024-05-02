@@ -4,11 +4,12 @@
 </script>
 
 <script lang="ts">
-  import DashboardList from "./_components/dashboardList.svelte";
+  import DashboardGrid from "./_components/dashboardGrid.svelte";
 
   import Plus from "lucide-svelte/icons/plus";
   import { Card, Content } from "$lib/components/ui/card";
   import { Button } from "$lib/components/ui/button";
+  import { Tree } from "$lib/genealogee";
 
   const { data } = $props();
   const queryClient = data.queryClient;
@@ -16,7 +17,8 @@
   const dashboardsQuery = createQuery({
     queryKey: ["trees"],
     queryFn: () => getDashboards(fetch),
-    select: (data) => data.trees,
+    // FIXME: PERPFORMANCE ISSUE = SKILL ISSUE
+    select: (data) => data.trees.map((tree) => new Tree(tree)),
   });
 
   const createDashboardMutation = createMutation({
@@ -79,7 +81,7 @@
     </Content>
   </Card>
 {:else}
-  <DashboardList dashboards={$dashboardsQuery.data} />
+  <DashboardGrid trees={$dashboardsQuery.data} />
 {/if}
 
 <Button

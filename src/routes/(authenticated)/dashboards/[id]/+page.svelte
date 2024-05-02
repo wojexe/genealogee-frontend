@@ -15,20 +15,6 @@
   });
 </script>
 
-<!-- <div class="text-xs absolute top-2 left-2 pointer-events-none">
-  <div>Dashboard#{treeID}</div>
-  <div>People count: {$query.data?.people.size}</div>
-  <div class="relative left-4">
-    {#each [...($query.data?.people.values() ?? [])] as person}
-      <div class="relative">
-        {person.givenNames}
-        {person.familyName}-{person.birthName}
-      </div>
-    {/each}
-  </div>
-  <div>Families count: {$query.data?.families.size}</div>
-</div> -->
-
 {#if $query.isPending}
   <span>Loading...</span>
 {:else if $query.isError}
