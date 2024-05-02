@@ -2,6 +2,7 @@
   import type { Tree } from "$lib/genealogee";
 
   type Props = {
+    class?: string;
     tree: Tree;
   };
 </script>
@@ -9,7 +10,7 @@
 <script lang="ts">
   import AddPerson from "./tree-add-person.svelte";
 
-  const { tree }: Props = $props();
+  const { tree, class: className }: Props = $props();
 </script>
 
-<AddPerson who="first person" {tree} />
+<AddPerson who="first person" {tree} class={className} />

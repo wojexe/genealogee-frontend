@@ -28,7 +28,7 @@ type Props = {
   const isParent = (personID: string) => tree.parents.has(personID);
 </script>
 
-<div class="w-auto grid auto-cols-auto grid-flow-row gap-24 place-items-center mx-auto">
+<div class="w-auto grid auto-cols-auto grid-flow-row gap-24 place-items-center">
   <div class="row-start-1 flex flex-row gap-16 place-items-end">
     {#each children as personID}
       {#if isParent(personID)}

@@ -1,15 +1,16 @@
 <script context="module" lang="ts">
+  import { cn } from "$lib/utils";
+
   import type { Tree } from "$lib/genealogee";
 
   import { buttonVariants } from "$lib/components/ui/button";
   import * as Dialog from "$lib/components/ui/dialog";
+  import * as Tooltip from "$lib/components/ui/tooltip";
 
   import PlusCircle from "lucide-svelte/icons/circle-plus";
 
-  import * as Tooltip from "$lib/components/ui/tooltip";
-
-  // TODO: handle custom styles?
   type Props = {
+    class?: string;
     who: "first person" | "partner" | "child";
     tree: Tree;
     familyID?: string;
@@ -20,7 +21,7 @@
 <script lang="ts">
   import AddPersonDialog from "./dialogs/add-person-dialog.svelte";
 
-  let { who, tree, familyID, personID }: Props = $props();
+  let { class: className, who, tree, familyID, personID }: Props = $props();
 
   let dialogOpen: boolean = $state(false);
 </script>
@@ -28,10 +29,14 @@
 <Tooltip.Root>
   <Dialog.Root bind:open={dialogOpen}>
     <Tooltip.Trigger
-      class="{buttonVariants({
-        variant: 'outline',
-        size: 'content',
-      })} flex flex-row gap-2 p-3 text-sm self-center opacity-40 hover:bg-background hover:opacity-100 transition-opacity"
+      class={cn(
+        buttonVariants({
+          variant: "outline",
+          size: "content",
+        }),
+        "flex flex-row gap-2 p-3 text-sm self-center opacity-40 hover:bg-background hover:opacity-100 transition-opacity",
+        className ?? ""
+      )}
       onclick={() => (dialogOpen = true)}
     >
       <PlusCircle />
