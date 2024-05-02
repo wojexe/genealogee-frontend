@@ -83,9 +83,7 @@
     formID = `add-child-${familyID}`;
   }
 
-  const data = defaults(valibot(createPersonSchema));
-
-  const form = superForm(data, {
+  const form = superForm(defaults(valibot(createPersonSchema)), {
     id: formID,
     SPA: true,
     resetForm: false,
@@ -102,8 +100,11 @@
 
   const { form: formData, message, enhance } = form;
 
-  const dateOfBirthProxy = dateProxy(form, "dateOf.birth", { format: "date" });
-  const dateOfDeathProxy = dateProxy(form, "dateOf.death", { format: "date" });
+  const createDateProxy = (fieldName: any) =>
+    dateProxy(form, fieldName, { format: "date", empty: "null" });
+
+  const dateOfBirthProxy = createDateProxy("dateOf.birth");
+  const dateOfDeathProxy = createDateProxy("dateOf.death");
 
   $formData.treeID = treeID;
 

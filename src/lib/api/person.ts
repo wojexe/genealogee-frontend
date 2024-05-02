@@ -10,6 +10,7 @@ import {
   string,
   uuid,
   parse,
+  minLength,
 } from "valibot";
 
 import { baseURL } from "$lib/api";
@@ -80,8 +81,8 @@ export const createPersonSchema = object(
   {
     treeID: string([uuid()]),
 
-    givenNames: string(),
-    familyName: string(),
+    givenNames: string([minLength(1)]),
+    familyName: string([minLength(1)]),
     birthName: optional(string()),
 
     dateOf: datesSchema,
