@@ -9,5 +9,11 @@
   "exampleEmail": "jankowalski@gmail.com",
   "examplePassword": "bardzo-skomplikowane-haslo",
   "tree_untitled": "Bez nazwy",
-  "family_display_name": "Rodzina {name}"
+  "family_display_name": "Rodzina {name}",
+  "log_out": "Wyloguj",
+  "email": "Email",
+  "password": "Hasło",
+  "name": "Nazwa",
+  "invalid_email_or_password": "Nieprawidłowy e-mail lub hasło",
+  "email_already_exists": "Użytkownik o podanym adresie e-mail już istnieje"
 }

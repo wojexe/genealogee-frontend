@@ -1,5 +1,6 @@
 <script lang="ts">
   import * as m from "$paraglide/messages";
+  import { i18n } from "$lib/i18n";
 
   import { goto } from "$app/navigation";
 
@@ -31,7 +32,7 @@
       );
 
       if (loggedIn) {
-        return goto("/dashboards");
+        return goto(i18n.resolveRoute("/dashboards"));
       }
 
       if (error) {
@@ -40,8 +41,11 @@
           verbose: (error as TypeError).message,
         };
       } else {
+        const reason = (await response?.json())?.reason;
         form.message = {
-          error: (await response?.json())?.reason,
+          // TODO: pass translation keys from the backend OR pass proper accept-language header
+          error:
+            reason == "Unauthorized" ? m.invalid_email_or_password() : reason,
           verbose: response?.statusText,
         };
       }
@@ -55,13 +59,13 @@
 
 <Content class="sm:max-w-[425px]">
   <Header>
-    <Title>Login</Title>
+    <Title>{m.login()}</Title>
   </Header>
 
-  <form method="POST" use:enhance class="flex flex-col">
+  <form method="POST" use:enhance class="flex flex-col gap-3">
     <Field {form} name="email" class="grid grid-cols-4 items-center gap-x-4">
       <Control let:attrs>
-        <Label>Email</Label>
+        <Label>{m.email()}</Label>
         <Input
           {...attrs}
           type="email"
@@ -75,7 +79,7 @@
 
     <Field {form} name="password" class="grid grid-cols-4 items-center gap-x-4">
       <Control let:attrs>
-        <Label>Password</Label>
+        <Label>{m.password()}</Label>
         <Input
           {...attrs}
           type="password"
@@ -89,18 +93,10 @@
     </Field>
 
     {#if $message && $message.error}
-      <div class="flex flex-col gap-y-2 mb-2">
+      <div class="flex flex-col gap-y-2">
         <div class="text-[0.8rem] font-medium text-center text-destructive">
           {$message.error}
         </div>
-
-        <!--
-          {#if $message.verbose != null}
-            <pre
-              class="text-[0.8rem] text-primary bg-secondary rounded-lg flex justify-center
-                    place-self-center px-2 py-1 border-red-700 border-solid border">{$message.verbose}</pre>
-          {/if}
-        -->
       </div>
     {/if}
 
@@ -110,7 +106,7 @@
           ? 'opacity-100'
           : 'opacity-0'}"
       />
-      <Button type="submit" disabled={$submitting}>Log in</Button>
+      <Button type="submit" disabled={$submitting}>{m.login()}</Button>
     </Footer>
   </form>
 </Content>

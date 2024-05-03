@@ -41,8 +41,15 @@
           verbose: (error as TypeError).message,
         };
       } else {
+        // TODO: pass translation keys from the backend OR pass proper accept-language header
+        // TODO: pass the error to the email field of the form
+        const reason = (await response?.json())?.reason;
+
         form.message = {
-          error: (await response?.json())?.reason,
+          error:
+            reason === "A user with that email already exists"
+              ? m.email_already_exists()
+              : reason,
           verbose: response?.statusText,
         };
       }
@@ -56,13 +63,13 @@
 
 <Content class="sm:max-w-[425px]">
   <Header>
-    <Title>Register</Title>
+    <Title>{m.register()}</Title>
   </Header>
 
-  <form method="POST" use:enhance>
+  <form method="POST" use:enhance class="flex flex-col gap-3">
     <Field {form} name="name" class="grid grid-cols-4 items-center gap-x-4">
       <Control let:attrs>
-        <Label>Name</Label>
+        <Label>{m.name()}</Label>
         <Input
           {...attrs}
           autocomplete="name"
@@ -76,7 +83,7 @@
 
     <Field {form} name="email" class="grid grid-cols-4 items-center gap-x-4">
       <Control let:attrs>
-        <Label>Email</Label>
+        <Label>{m.email()}</Label>
         <Input
           {...attrs}
           type="email"
@@ -90,7 +97,7 @@
 
     <Field {form} name="password" class="grid grid-cols-4 items-center gap-x-4">
       <Control let:attrs>
-        <Label>Password</Label>
+        <Label>{m.password()}</Label>
         <Input
           {...attrs}
           type="password"
@@ -104,18 +111,10 @@
     </Field>
 
     {#if $message && $message.error}
-      <div class="flex flex-col gap-y-2 mb-2">
+      <div class="flex flex-col gap-y-2">
         <div class="text-[0.8rem] font-medium text-center text-destructive">
           {$message.error}
         </div>
-
-        <!--
-        {#if $message.verbose != null}
-          <pre
-            class="text-[0.8rem] text-primary bg-secondary rounded-lg flex justify-center
-                place-self-center px-2 py-1 border-red-700 border-solid border">{$message.verbose}</pre>
-        {/if}
-      -->
       </div>
     {/if}
 
@@ -125,7 +124,7 @@
           ? 'opacity-100'
           : 'opacity-0'}"
       />
-      <Button type="submit" disabled={$submitting}>Sign up</Button>
+      <Button type="submit" disabled={$submitting}>{m.register()}</Button>
     </Footer>
   </form>
 </Content>

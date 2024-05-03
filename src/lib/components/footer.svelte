@@ -42,7 +42,7 @@ async function logout() {
     {/each}
 
     {#if authenticatedRoute($page.route.id)}
-      <Button variant="link" on:click={() => logout()}>Log out</Button>
+      <Button variant="link" on:click={() => logout()}>{m.log_out()}</Button>
     {/if}
   </Content>
 </Card>

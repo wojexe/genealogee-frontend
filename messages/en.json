@@ -9,5 +9,11 @@
   "exampleEmail": "johnsmith@gmail.com",
   "examplePassword": "a-very-complicated-password",
   "tree_untitled": "Untitled",
-  "family_display_name": "{name} family"
+  "family_display_name": "{name} family",
+  "log_out": "Log out",
+  "email": "Email",
+  "password": "Password",
+  "name": "Name",
+  "invalid_email_or_password": "Invalid email or password",
+  "email_already_exists": "A user with that email already exists"
 }
