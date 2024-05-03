@@ -64,7 +64,7 @@ type Props = {
     <AddPartner {tree} personID={parents[0]} />
   </div>
 
-  {#each children as personID, index (personID)}
+  {#each children as _personID, index}
     <Arrow parentElement={element} from={parentsElement} to={childElements[index]} />
   {/each}
 </div>
