@@ -40,7 +40,7 @@
     "@inlang/paraglide-js-adapter-sveltekit": "^0.5.10",
     "@internationalized/date": "^3.5.2",
     "@tanstack/svelte-query": "^5.28.4",
-    "bits-ui": "^0.21.5",
+    "bits-ui": "^0.21.7",
     "clsx": "^2.1.0 ",
     "formsnap": "^1.0.0",
     "lucide-svelte": "^0.373.0",
