@@ -68,7 +68,7 @@ class Tree implements Omit<TreeType, "people" | "families"> {
 
       if (rootFamily == null) throw new Error("Root family not found");
 
-      name = `${rootFamily.joinedParentNames()}'s`;
+      name = `${rootFamily.joinedParentNames()}`;
     }
 
     // Capitalize first letter

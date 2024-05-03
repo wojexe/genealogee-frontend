@@ -120,7 +120,7 @@
     <Title>Create {who}</Title>
   </Header>
 
-  <form method="POST" use:enhance class="flex flex-col">
+  <form method="POST" use:enhance class="flex flex-col gap-3">
     <Field {form} name="givenNames">
       <Control let:attrs>
         <Label>Given names</Label>
