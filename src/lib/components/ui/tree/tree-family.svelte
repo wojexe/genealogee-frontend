@@ -2,17 +2,19 @@
 import type { Tree, Family } from "$lib/genealogee";
 
 type Props = {
+  element: any;
   familyID: Family["id"];
   tree: Tree;
-  rootFamilyElement?: any;
 };
 </script>
 
 <script lang="ts">
   import { AddPartner, AddChild } from ".";
-  import Person from "./tree-person.svelte";
 
-  let { familyID, tree }: Props = $props();
+  import Person from "./tree-person.svelte";
+  import Arrow from "$lib/components/arrow.svelte";
+
+  let { element = $bindable(), familyID, tree }: Props = $props();
 
   const family = $derived(tree.families.get(familyID));
 
@@ -26,16 +28,19 @@ type Props = {
   const children = $derived(family!.children);
 
   const isParent = (personID: string) => tree.parents.has(personID);
+
+  let parentsElement: HTMLDivElement | undefined = $state(undefined);
+  let childElements: any[] = $state([]);
 </script>
 
-<div class="w-auto grid auto-cols-auto grid-flow-row gap-24 place-items-center">
+<div class="relative w-auto grid auto-cols-auto grid-flow-row gap-24 place-items-center" bind:this={element}>
   <div class="row-start-1 flex flex-row gap-16 place-items-end">
-    {#each children as personID}
+    {#each children as personID, index (personID)}
       {#if isParent(personID)}
-        <svelte:self familyID={tree.parents.get(personID)!} {tree} />
+        <svelte:self familyID={tree.parents.get(personID)!} {tree} bind:element={childElements[index]} />
       {:else}
         <div class="grid grid-cols-[1fr_fit-content(100%)_1fr] gap-2">
-          <div class="col-start-2 flex flex-row gap-2 place-items-center">
+          <div class="col-start-2 flex flex-row gap-2 place-items-center" bind:this={childElements[index]}>
             <Person {personID} {tree} />
           </div>
 
@@ -49,13 +54,17 @@ type Props = {
     </div>
   </div>
 
-  <div class="row-start-2 grid grid-cols-[1fr_fit-content(100%)_1fr] gap-2">
+  <div id={familyID} class="row-start-2 grid grid-cols-[1fr_fit-content(100%)_1fr] gap-2" bind:this={parentsElement}>
     <div class="col-start-2 flex flex-row gap-2 place-items-center">
-      {#each parents as personID}
+      {#each parents as personID (personID)}
         <Person {personID} {tree} />
       {/each}
     </div>
 
     <AddPartner {tree} personID={parents[0]} />
   </div>
+
+  {#each children as personID, index (personID)}
+    <Arrow parentElement={element} from={parentsElement} to={childElements[index]} />
+  {/each}
 </div>

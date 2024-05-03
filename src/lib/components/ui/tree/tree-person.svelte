@@ -70,7 +70,7 @@
 <Dialog.Root>
   <ContextMenu.Root>
     <ContextMenu.Trigger>
-      <Card class="min-w-48 max-w-82 break-words flex flex-col">
+      <Card id={personID} class="min-w-48 max-w-82 break-words flex flex-col">
         {@render personCardContent()}
       </Card>
     </ContextMenu.Trigger>
