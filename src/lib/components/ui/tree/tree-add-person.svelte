@@ -1,4 +1,5 @@
 <script context="module" lang="ts">
+  import * as m from "$paraglide/messages";
   import { cn } from "$lib/utils";
 
   import type { Tree } from "$lib/genealogee";
@@ -24,6 +25,12 @@
   let { class: className, who, tree, familyID, personID }: Props = $props();
 
   let dialogOpen: boolean = $state(false);
+
+  const translatedWho = {
+    "first person": m.first_person(),
+    partner: m.partner(),
+    child: m.child(),
+  };
 </script>
 
 <Tooltip.Root>
@@ -45,5 +52,5 @@
     <AddPersonDialog {tree} {who} treeID={tree.id} {familyID} {personID} />
   </Dialog.Root>
 
-  <Tooltip.Content>Add {who}</Tooltip.Content>
+  <Tooltip.Content>{m.add_person({ who: translatedWho[who] })}</Tooltip.Content>
 </Tooltip.Root>

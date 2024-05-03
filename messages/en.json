@@ -15,5 +15,11 @@
   "password": "Password",
   "name": "Name",
   "invalid_email_or_password": "Invalid email or password",
-  "email_already_exists": "A user with that email already exists"
+  "email_already_exists": "A user with that email already exists",
+  "view_dashboard": "View",
+  "create_dashboard": "New dashboard",
+  "add_person": "Add {who}",
+  "first_person": "first person",
+  "partner": "partner",
+  "child": "child"
 }

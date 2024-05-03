@@ -71,8 +71,6 @@ class Tree implements Omit<TreeType, "people" | "families"> {
       name = `${rootFamily.joinedParentNames()}'s`;
     }
 
-    console.log(m.family_display_name({ name }));
-
     // Capitalize first letter
     const displayName = m.family_display_name({ name });
     return displayName[0].toUpperCase() + displayName.slice(1);

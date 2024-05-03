@@ -30,6 +30,7 @@ onMount(()=> {
       <AddFirstPerson tree={tree} />
     {:else}
       <Family familyID={tree.rootFamilyID!} {tree} />
+      <!-- TODO: add arrows -->
     {/if}
   </div>
 </div>

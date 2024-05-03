@@ -11,6 +11,9 @@ import {
   uuid,
   parse,
   minLength,
+  transform,
+  toTrimmed,
+  toCustom,
 } from "valibot";
 
 import { baseURL } from "$lib/api";
@@ -81,9 +84,13 @@ export const createPersonSchema = object(
   {
     treeID: string([uuid()]),
 
-    givenNames: string([minLength(1)]),
-    familyName: string([minLength(1)]),
-    birthName: optional(string()),
+    givenNames: string([toTrimmed(), minLength(1)]),
+    familyName: string([toTrimmed(), minLength(1)]),
+    birthName: optional(
+      transform(string([toTrimmed()]), (input) =>
+        input.length === 0 ? undefined : input,
+      ),
+    ),
 
     dateOf: datesSchema,
 

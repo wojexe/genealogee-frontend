@@ -92,8 +92,6 @@
     onUpdate: async ({ form }) => {
       if (!form.valid) return;
 
-      console.log(form);
-
       $addPersonMutation.mutate(form.data);
     },
   });

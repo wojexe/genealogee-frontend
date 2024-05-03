@@ -1,4 +1,6 @@
 <script context="module" lang="ts">
+  import * as m from "$paraglide/messages";
+
   import Trash from "lucide-svelte/icons/trash";
   import { Button } from "$lib/components/ui/button";
   import { Card, Footer, Header, Title } from "$lib/components/ui/card";
@@ -46,7 +48,7 @@
   });
 </script>
 
-<Card class="min-w-64">
+<Card class="min-w-64 flex flex-col justify-between">
   <Header>
     <Title>🌳 {tree.name}</Title>
   </Header>
@@ -58,6 +60,6 @@
     >
       <Trash />
     </Button>
-    <Button href={`/dashboards/${tree.id}`}>View</Button>
+    <Button href={`/dashboards/${tree.id}`}>{m.view_dashboard()}</Button>
   </Footer>
 </Card>

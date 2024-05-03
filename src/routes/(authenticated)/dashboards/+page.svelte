@@ -1,4 +1,6 @@
 <script context="module" lang="ts">
+  import * as m from "$paraglide/messages";
+
   import { createTree, getDashboards, type Dashboards } from "$lib/api/tree";
   import { createMutation, createQuery } from "@tanstack/svelte-query";
 </script>
@@ -91,5 +93,5 @@
   on:click={() => $createDashboardMutation.mutate(undefined)}
 >
   <Plus class="h-5 w-5" />
-  New dashboard
+  {m.create_dashboard()}
 </Button>
