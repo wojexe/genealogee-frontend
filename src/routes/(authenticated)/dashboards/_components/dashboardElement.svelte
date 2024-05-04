@@ -42,7 +42,6 @@
       }
     },
     onSettled: async (_data, _error, id, _context) => {
-      await queryClient.invalidateQueries({ queryKey: ["trees"] });
       await queryClient.invalidateQueries({ queryKey: ["tree", id] });
     },
   });

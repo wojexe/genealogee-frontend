@@ -60,17 +60,12 @@ export const deleteTree = async (
 ): Promise<void> => {
   parse(string([uuid()]), treeID);
 
-  const body = {
-    treeID,
-  };
-
   return await customFetch(`${baseURL}/tree/${treeID}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
     credentials: "include",
-    body: JSON.stringify(body),
   }).then((response) =>
     response.ok
       ? (null as never)
