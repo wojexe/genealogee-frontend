@@ -43,7 +43,7 @@ class Tree implements Omit<TreeType, "people" | "families"> {
       }
     }
 
-    console.log(`Tree#${tree.id} constructed`);
+    // console.log(`Tree#${tree.id} constructed`);
   }
 
   get id() {
