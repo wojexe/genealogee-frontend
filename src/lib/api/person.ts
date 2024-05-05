@@ -121,3 +121,38 @@ export const createPerson = async (
     .then(async (response) => await response.json())
     .then((data) => parse(personSchema, data));
 };
+
+export const editPersonSchema = object({
+  treeID: string([uuid()]),
+
+  givenNames: string([toTrimmed(), minLength(1)]),
+  familyName: string([toTrimmed(), minLength(1)]),
+  birthName: optional(
+    transform(string([toTrimmed()]), (input) =>
+      input.length === 0 ? undefined : input,
+    ),
+  ),
+
+  dateOf: datesSchema,
+});
+
+export type EditPersonInput = Output<typeof editPersonSchema>;
+
+export const editPerson = async (
+  personData: EditPersonInput,
+  customFetch = fetch,
+): Promise<Person> => {
+  return await customFetch(`${baseURL}/person/edit`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify(personData),
+  })
+    .then((response) =>
+      response.ok ? response : Promise.reject(new Error(response.statusText)),
+    )
+    .then(async (response) => await response.json())
+    .then((data) => parse(personSchema, data));
+};

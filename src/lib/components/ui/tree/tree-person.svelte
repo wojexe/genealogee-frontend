@@ -18,12 +18,12 @@
     tree: Tree;
   };
 
-  // TODO: make URL have precedence over navigator language
   const dateFormatter = new Intl.DateTimeFormat(languageTag(), {
     day: "numeric",
     month: "long",
     year: "numeric",
   });
+
 </script>
 
 <script lang="ts">
@@ -33,6 +33,8 @@
   let person: Person = $derived(tree.people.get(personID)!);
 
   type DialogContentState = "edit" | "delete";
+
+  let dialogOpen: boolean = $state(false);
   let dialogContent: DialogContentState = $state("edit");
 </script>
 
@@ -67,10 +69,11 @@
   {/if}
 {/snippet}
 
-<Dialog.Root>
+<Dialog.Root bind:open={dialogOpen}>
+<!-- TODO: Use alert-dialog for delete? seems like a good idea -->
   <ContextMenu.Root>
     <ContextMenu.Trigger>
-      <Card id={personID} class="min-w-48 max-w-82 break-words flex flex-col">
+      <Card id={person.id} class="min-w-48 max-w-82 break-words flex flex-col">
         {@render personCardContent()}
       </Card>
     </ContextMenu.Trigger>
@@ -100,11 +103,9 @@
     </ContextMenu.Content>
   </ContextMenu.Root>
 
-  <Dialog.Content>
-    {#if dialogContent == "edit"}
-      <EditPersonDialog />
-    {:else if dialogContent == "delete"}
-      <DeletePersonDialog />
-    {/if}
-  </Dialog.Content>
+  {#if dialogContent == "edit"}
+    <EditPersonDialog {person} onSubmit={()=>(dialogOpen = false)} />
+  {:else if dialogContent == "delete"}
+    <DeletePersonDialog {person} onSubmit={()=>(dialogOpen = false)} />
+  {/if}
 </Dialog.Root>

@@ -26,6 +26,10 @@ class Person implements PersonType {
     this.parentFamilyID = person.parentFamilyID;
   }
 
+  get fullName() {
+    return Person.fullName(this);
+  }
+
   public static fullName(person: PersonType) {
     return `${person.givenNames} ${person.familyName}${
       person.birthName != null ? `-${person.birthName}` : ""
