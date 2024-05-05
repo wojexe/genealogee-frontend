@@ -26,10 +26,10 @@ onMount(()=> {
 
 <div class="h-fit w-fit rounded-3xl overflow-hidden shadow-sm place-content-center">
   <div bind:this={container} class="flex h-fit w-[90vw] overflow-auto rounded-3xl border border-red px-8 py-10 [&>*]:mx-auto">
-    {#if tree.people.size === 0}
+    {#if tree.rootFamilyID == null}
       <AddFirstPerson tree={tree} />
     {:else}
-      <Family familyID={tree.rootFamilyID!} {tree} />
+      <Family familyID={tree.rootFamilyID} {tree} />
     {/if}
   </div>
 </div>

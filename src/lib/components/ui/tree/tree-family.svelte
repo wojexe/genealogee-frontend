@@ -22,7 +22,7 @@ type Props = {
 
   $effect.pre(() => {
     if (family == null) {
-      throw new Error("Family not found");
+      throw new Error(`Family#${familyID} not found`);
     }
   });
 
