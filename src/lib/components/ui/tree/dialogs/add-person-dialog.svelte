@@ -1,4 +1,6 @@
 <script context="module" lang="ts">
+  import * as m from "$paraglide/messages";
+
   import { dateProxy, defaults, superForm } from "sveltekit-superforms";
   import { valibot } from "sveltekit-superforms/adapters";
 
@@ -90,11 +92,17 @@
 
     $formData.childOf = parentID;
   }
+
+  const translatedWho = {
+    "first person": m.first_person(),
+    partner: m.partner(),
+    child: m.child(),
+  } as const;
 </script>
 
 <Content class="sm:max-w-[425px]">
   <Header>
-    <Title>Create {who}</Title>
+    <Title>{m.addPersonDialog_title({ who: translatedWho[who] })}</Title>
   </Header>
 
   <form
@@ -105,10 +113,10 @@
   >
     <Field {form} name="givenNames">
       <Control let:attrs>
-        <Label>Given names</Label>
+        <Label>{m.person_givenNames()}</Label>
         <Input
           {...attrs}
-          placeholder="John"
+          placeholder={m.person_exampleGivenNames()}
           bind:value={$formData.givenNames}
         />
       </Control>
@@ -117,10 +125,10 @@
 
     <Field {form} name="familyName">
       <Control let:attrs>
-        <Label>Family name</Label>
+        <Label>{m.person_familyName()}</Label>
         <Input
           {...attrs}
-          placeholder="Smith"
+          placeholder={m.person_exampleFamilyName()}
           bind:value={$formData.familyName}
         />
       </Control>
@@ -129,10 +137,10 @@
 
     <Field {form} name="birthName">
       <Control let:attrs>
-        <Label>Birth name</Label>
+        <Label>{m.person_birthName()}</Label>
         <Input
           {...attrs}
-          placeholder="Waters"
+          placeholder={m.person_exampleBirthName()}
           bind:value={$formData.birthName}
         />
       </Control>
@@ -142,7 +150,7 @@
     <Fieldset {form} name="dateOf" class="grid grid-cols-2 gap-12 space-y-0">
       <Field {form} name="dateOf.birth">
         <Control let:attrs>
-          <Label>Birth date</Label>
+          <Label>{m.person_birthDate()}</Label>
           <Input {...attrs} type="date" bind:value={$dateOfBirthProxy} />
         </Control>
         <FieldErrors class="col-span-full" />
@@ -150,7 +158,7 @@
 
       <Field {form} name="dateOf.death">
         <Control let:attrs>
-          <Label>Death date</Label>
+          <Label>{m.person_deathDate()}</Label>
           <Input {...attrs} type="date" bind:value={$dateOfDeathProxy} />
         </Control>
         <FieldErrors class="col-span-full" />
@@ -166,7 +174,7 @@
     {/if}
 
     <Footer>
-      <Button type="submit">Create person</Button>
+      <Button type="submit">{m.addPersonDialog_addPerson()}</Button>
     </Footer>
   </form>
 </Content>

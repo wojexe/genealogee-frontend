@@ -1,9 +1,11 @@
 <script context="module" lang="ts">
+  import * as m from "$paraglide/messages"
   import type { Person } from "$lib/genealogee";
 
   type Props = {
     person: Person;
     isChild: boolean;
+    isComplexDelete: boolean;
   };
 
   import * as AlertDialog from "$lib/components/ui/alert-dialog";
@@ -14,7 +16,7 @@
 </script>
 
 <script lang="ts">
-  let { person, isChild }: Props = $props();
+  let { person, isComplexDelete }: Props = $props();
 
   const queryClient = useQueryClient();
 
@@ -27,34 +29,31 @@
       await queryClient.invalidateQueries({ queryKey: ["trees"] });
     },
   });
-
-  const title = $derived.by(() => {
-    let title = `Delete ${person.fullName}`;
-
-    // if (isChild) title += " and their whole branch";
-
-    return title + "?";
-  });
 </script>
 
 <AlertDialog.Content>
   <AlertDialog.Header>
-    <AlertDialog.Title>{title}</AlertDialog.Title>
-    <AlertDialog.Description>
-      {#if isChild}
-        <b>This will also delete this person's whole branch</b> - all partners and
-        children.
+    <AlertDialog.Title
+      >{m.deletePersonDialog_title({
+        fullName: person.fullName,
+      })}</AlertDialog.Title
+    >
+    <AlertDialog.Description class="flex flex-col gap-3">
+      <span>
+      {#if isComplexDelete}
+        {@html m.deletePersonDialog_complexDeleteMessage()}
       {/if}
+      </span>
 
-      This action cannot be undone.
+      <div class="font-bold text-center">{m.actionCannotBeUndone()}</div>
     </AlertDialog.Description>
   </AlertDialog.Header>
 
   <AlertDialog.Footer>
-    <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+    <AlertDialog.Cancel>{m.cancel()}</AlertDialog.Cancel>
     <AlertDialog.Action
       class={buttonVariants({ variant: "destructive" })}
-      onclick={() => $deletePersonMutation.mutate()}>Delete</AlertDialog.Action
+      onclick={() => $deletePersonMutation.mutate()}>{m.delete_()}</AlertDialog.Action
     >
   </AlertDialog.Footer>
 </AlertDialog.Content>

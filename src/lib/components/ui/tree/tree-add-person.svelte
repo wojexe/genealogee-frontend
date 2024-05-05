@@ -30,7 +30,7 @@
     "first person": m.first_person(),
     partner: m.partner(),
     child: m.child(),
-  };
+  } as const;
 
   const onSubmit = () => {
     dialogOpen = false;
