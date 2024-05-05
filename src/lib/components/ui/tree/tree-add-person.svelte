@@ -31,6 +31,10 @@
     partner: m.partner(),
     child: m.child(),
   };
+
+  const onSubmit = () => {
+    dialogOpen = false;
+  };
 </script>
 
 <Tooltip.Root>
@@ -49,7 +53,14 @@
       <PlusCircle />
     </Tooltip.Trigger>
 
-    <AddPersonDialog {tree} {who} treeID={tree.id} {familyID} {personID} />
+    <AddPersonDialog
+      {tree}
+      {who}
+      treeID={tree.id}
+      {familyID}
+      {personID}
+      {onSubmit}
+    />
   </Dialog.Root>
 
   <Tooltip.Content>{m.add_person({ who: translatedWho[who] })}</Tooltip.Content>

@@ -21,7 +21,6 @@
   } from "$lib/components/ui/form";
   import { Input } from "$lib/components/ui/input";
 
-  import type { Dashboard } from "$lib/api/tree";
   import type { Tree } from "$lib/genealogee";
 
   type Props = {
@@ -30,11 +29,12 @@
     treeID: string;
     familyID?: string;
     personID?: string;
+    onSubmit: () => void;
   };
 </script>
 
 <script lang="ts">
-  let { who, tree, treeID, familyID, personID }: Props = $props();
+  let { who, tree, treeID, familyID, personID, onSubmit }: Props = $props();
 
   if (familyID != null && personID != null) {
     throw new Error("One of familyID and personID must be provided");
@@ -42,34 +42,11 @@
 
   const queryClient = useQueryClient();
 
+  // TODO: optimistic update
   const addPersonMutation = createMutation({
     mutationFn: async (personData: CreatePersonInput) =>
       createPerson(personData),
-    onMutate: async (personData) => {
-      await queryClient.cancelQueries({ queryKey: ["tree", treeID] });
-
-      const previousTree = queryClient.getQueryData<Dashboard>([
-        "tree",
-        treeID,
-      ]);
-
-      // TODO: create person element from personData to display before response
-
-      queryClient.setQueryData<Dashboard>(["tree", treeID], (old) => old);
-
-      return { previousTree };
-    },
-    onError: (_err, _personData, context) => {
-      if (context?.previousTree) {
-        queryClient.setQueryData<Dashboard>(
-          ["tree", treeID],
-          context.previousTree
-        );
-      }
-    },
-    onSettled: async (_data, _error, _personData, _context) => {
-      // load from response
-
+    onSettled: async () => {
       await queryClient.invalidateQueries({ queryKey: ["tree", treeID] });
     },
   });
@@ -120,7 +97,12 @@
     <Title>Create {who}</Title>
   </Header>
 
-  <form method="POST" use:enhance class="flex flex-col gap-3">
+  <form
+    method="POST"
+    use:enhance
+    class="flex flex-col gap-3"
+    onsubmit={() => onSubmit()}
+  >
     <Field {form} name="givenNames">
       <Control let:attrs>
         <Label>Given names</Label>
