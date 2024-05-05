@@ -6,6 +6,7 @@
   import { Card, Content, Header } from "$lib/components/ui/card";
 
   import * as Dialog from "$lib/components/ui/dialog";
+  import * as AlertDialog from "$lib/components/ui/alert-dialog";
   import * as ContextMenu from "$lib/components/ui/context-menu";
 
   import { Pencil, Trash } from "lucide-svelte";
@@ -14,6 +15,7 @@
   import DeletePersonDialog from "./dialogs/delete-person-dialog.svelte";
 
   type Props = {
+    isChild: boolean;
     personID: string;
     tree: Tree;
   };
@@ -27,7 +29,7 @@
 </script>
 
 <script lang="ts">
-  let { personID, tree }: Props = $props();
+  let { isChild, personID, tree }: Props = $props();
 
   // TODO: error handling
   let person: Person = $derived(tree.people.get(personID)!);
@@ -69,11 +71,11 @@
   {/if}
 {/snippet}
 
+<AlertDialog.Root>
 <Dialog.Root bind:open={dialogOpen}>
-<!-- TODO: Use alert-dialog for delete? seems like a good idea -->
   <ContextMenu.Root>
     <ContextMenu.Trigger>
-      <Card id={person.id} class="min-w-48 max-w-82 break-words flex flex-col">
+      <Card id={person.id} class="min-w-48 max-w-82 break-words flex flex-col {isChild ? "border-[2px] border-solid border-green-600" : ""}">
         {@render personCardContent()}
       </Card>
     </ContextMenu.Trigger>
@@ -89,7 +91,7 @@
         </ContextMenu.Item>
       </Dialog.Trigger>
 
-      <Dialog.Trigger
+      <AlertDialog.Trigger
         class="block w-[100%]"
         onclick={() => (dialogContent = "delete")}
       >
@@ -99,13 +101,11 @@
           <Trash />
           Delete
         </ContextMenu.Item>
-      </Dialog.Trigger>
+      </AlertDialog.Trigger>
     </ContextMenu.Content>
   </ContextMenu.Root>
 
-  {#if dialogContent == "edit"}
-    <EditPersonDialog {person} onSubmit={()=>(dialogOpen = false)} />
-  {:else if dialogContent == "delete"}
-    <DeletePersonDialog {person} onSubmit={()=>(dialogOpen = false)} />
-  {/if}
+  <EditPersonDialog {person} onSubmit={()=>(dialogOpen = false)} />
+  <DeletePersonDialog {person} {isChild} />
 </Dialog.Root>
+</AlertDialog.Root>

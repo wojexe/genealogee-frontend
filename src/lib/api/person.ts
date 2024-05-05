@@ -156,3 +156,14 @@ export const editPerson = async (
     .then(async (response) => await response.json())
     .then((data) => parse(personSchema, data));
 };
+
+export const deletePerson = async (personID: string): Promise<void> => {
+  return await fetch(`${baseURL}/person/${personID}`, {
+    method: "DELETE",
+    credentials: "include",
+  }).then((response) =>
+    response.ok
+      ? (null as never)
+      : Promise.reject(new Error(response.statusText)),
+  );
+};
