@@ -2,7 +2,7 @@ import { clsx } from "clsx";
 import { cubicOut } from "svelte/easing";
 import { twMerge } from "tailwind-merge";
 
-/** @param {string[]} inputs */
+/** @param {Array<string | null | undefined>} inputs */
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
