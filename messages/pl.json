@@ -21,5 +21,6 @@
   "add_person": "Dodaj {who}",
   "first_person": "pierwszą osobę",
   "partner": "partnera",
-  "child": "dziecko"
+  "child": "dziecko",
+  "no_dashboards_found": "Brak drzew do wyświetlenia"
 }

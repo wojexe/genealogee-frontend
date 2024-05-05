@@ -5,12 +5,16 @@
   import { Button } from "$lib/components/ui/button";
   import { Card, Footer, Header, Title } from "$lib/components/ui/card";
 
-  import type { Tree } from "$lib/genealogee";
-  import { deleteTree, type Dashboards } from "$lib/api/tree";
+  import { Tree } from "$lib/genealogee";
+  import {
+    deleteTree,
+    type Tree as TreeType,
+    type Dashboards,
+  } from "$lib/api/tree";
   import { useQueryClient, createMutation } from "@tanstack/svelte-query";
 
   type Props = {
-    tree: Tree;
+    tree: TreeType;
   };
 </script>
 
@@ -45,11 +49,15 @@
       await queryClient.invalidateQueries({ queryKey: ["tree", id] });
     },
   });
+
+  const treeName = $derived(
+    Tree.createName(tree.name, tree.people, tree.families, tree.rootFamilyID)
+  );
 </script>
 
 <Card class="min-w-64 flex flex-col justify-between">
   <Header>
-    <Title>🌳 {tree.name}</Title>
+    <Title>🌳 {treeName}</Title>
   </Header>
   <Footer class="gap-3 place-content-end">
     <Button

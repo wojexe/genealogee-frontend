@@ -95,6 +95,30 @@ class Tree implements Omit<TreeType, "people" | "families"> {
   get snapshotIDs() {
     return this.#snapshotIDs;
   }
+
+  public static createName(
+    customName: TreeType["name"],
+    people: TreeType["people"],
+    families: TreeType["families"],
+    rootFamilyID: TreeType["rootFamilyID"],
+  ) {
+    if (customName) return customName;
+
+    let name: string;
+
+    try {
+      const rootFamily = families.find((f) => f.id === rootFamilyID);
+      if (rootFamily == null) throw new Error("Root family not found");
+
+      name = Family.joinedParentNames(rootFamily.parents, people);
+    } catch {
+      name = m.tree_untitled().toLowerCase();
+    }
+
+    // Capitalize first letter
+    const displayName = m.family_display_name({ name });
+    return displayName[0].toUpperCase() + displayName.slice(1);
+  }
 }
 
 export { Tree };

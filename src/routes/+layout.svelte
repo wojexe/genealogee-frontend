@@ -37,7 +37,6 @@ const { queryClient } = data;
   </QueryClientProvider>
 </ParaglideJS>
 
-
 <style>
   :global(body) {
     @apply min-h-screen p-6 flex flex-col;

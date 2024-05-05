@@ -25,6 +25,12 @@ class Person implements PersonType {
     this.familyID = person.familyID;
     this.parentFamilyID = person.parentFamilyID;
   }
+
+  public static fullName(person: PersonType) {
+    return `${person.givenNames} ${person.familyName}${
+      person.birthName != null ? `-${person.birthName}` : ""
+    }`;
+  }
 }
 
 class Dates implements DatesType {
@@ -41,7 +47,12 @@ class Dates implements DatesType {
   }
 
   public hasAnyDate() {
-    return this.birth != null || this.birthCustom != null || this.death != null || this.deathCustom != null;
+    return (
+      this.birth != null ||
+      this.birthCustom != null ||
+      this.death != null ||
+      this.deathCustom != null
+    );
   }
 }
 

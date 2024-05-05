@@ -78,6 +78,9 @@ const handleAuth: Handle = async ({ event, resolve }) => {
 
     if (authenticated) {
       event.locals.logger.debug({ route }, "Authentication successful");
+
+      const responseJSON = await response?.json();
+      event.locals.userID = responseJSON?.id;
     } else if (response != null) {
       event.locals.logger.debug({ route, response }, "Authentication failed");
 

@@ -1,6 +1,10 @@
 import type { Tree } from "./tree.svelte";
 
+import type { Tree as TreeType } from "$lib/api/tree";
+import type { Person as PersonType } from "$lib/api/person";
 import type { Family as FamilyType } from "$lib/api/family";
+
+import { Person } from "./person.svelte";
 
 class Family {
   tree: Tree;
@@ -31,7 +35,24 @@ class Family {
     }
 
     return parents
-      .map((person) => `${person?.givenNames} ${person?.familyName}`)
+      .map((person) => Person.fullName(person as PersonType))
+      .join(" & ");
+  }
+
+  public static joinedParentNames(
+    parentIDs: FamilyType["parents"],
+    people: TreeType["people"],
+  ): string {
+    const parents = parentIDs.map((parentID) =>
+      people.find(({ id }) => id === parentID),
+    );
+
+    if (parents.some((person) => person == null)) {
+      throw new Error("Parent not found");
+    }
+
+    return parents
+      .map((person) => Person.fullName(person as PersonType))
       .join(" & ");
   }
 }

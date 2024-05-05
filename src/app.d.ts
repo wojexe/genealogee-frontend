@@ -11,6 +11,7 @@ declare global {
     interface Locals {
       requestID: string;
       logger: Logger<string>;
+      userID: string;
     }
     // interface PageData {}
     // interface PageState {}

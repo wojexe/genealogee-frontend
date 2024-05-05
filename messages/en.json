@@ -21,5 +21,6 @@
   "add_person": "Add {who}",
   "first_person": "first person",
   "partner": "partner",
-  "child": "child"
+  "child": "child",
+  "no_dashboards_found": "No dashboards found"
 }

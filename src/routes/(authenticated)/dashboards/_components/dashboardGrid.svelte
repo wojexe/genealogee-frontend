@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Tree } from "$lib/genealogee/tree.svelte";
+  import type { Tree } from "$lib/api/tree";
   import DashboardElement from "./dashboardElement.svelte";
 
   type Props = {

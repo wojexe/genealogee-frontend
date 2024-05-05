@@ -1,7 +1,7 @@
 import { browser } from "$app/environment";
 import { QueryClient } from "@tanstack/svelte-query";
 
-export async function load() {
+export async function load({ data }) {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -10,5 +10,5 @@ export async function load() {
     },
   });
 
-  return { queryClient };
+  return { userID: data.userID, queryClient };
 }
