@@ -1,38 +1,40 @@
 <script lang="ts">
-import { goto } from "$app/navigation";
-import { page } from "$app/stores";
+  import { goto } from "$app/navigation";
+  import { page } from "$app/stores";
 
-import { logout as requestLogout } from "$lib/api/auth";
-import * as m from "$paraglide/messages";
-import Button from "./ui/button/button.svelte";
-import { Root as Card, Content } from "./ui/card";
+  import { logout as requestLogout } from "$lib/api/auth";
+  import { i18n } from "$lib/i18n";
+  import * as m from "$paraglide/messages";
+  import Button from "./ui/button/button.svelte";
+  import { Root as Card, Content } from "./ui/card";
 
-let links = [
-  { href: "/about", text: m.aboutUs() },
-  {
-    href: "https://github.com/wojexe/genealogee-frontend",
-    text: m.sourceCode(),
-  },
-];
+  let links = [
+    { href: "/about", text: m.aboutUs() },
+    {
+      href: "https://github.com/wojexe/genealogee-frontend",
+      text: m.sourceCode(),
+    },
+  ];
 
-const authenticatedRoute = (routeID: string | null) => routeID?.startsWith("/(authenticated)");
+  const authenticatedRoute = (routeID: string | null) =>
+    routeID?.startsWith("/(authenticated)");
 
-async function logout() {
-  const { loggedOut, response, error } = await requestLogout();
+  async function logout() {
+    const { loggedOut, response, error } = await requestLogout();
 
-  if (loggedOut) {
-    return goto("/");
+    if (loggedOut) {
+      return goto(i18n.resolveRoute("/"));
+    }
+
+    // TODO: send a toasts for below
+    if (response) {
+      console.error(response);
+    }
+
+    if (error) {
+      console.error(error);
+    }
   }
-
-  // TODO: send a toasts for below
-  if (response) {
-    console.error(response);
-  }
-
-  if (error) {
-    console.error(error);
-  }
-}
 </script>
 
 <Card class="bg-secondary w-fit flex flex-row self-center rounded-full">
