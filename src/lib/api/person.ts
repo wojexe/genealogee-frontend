@@ -139,10 +139,11 @@ export const editPersonSchema = object({
 export type EditPersonInput = Output<typeof editPersonSchema>;
 
 export const editPerson = async (
+  personID: string,
   personData: EditPersonInput,
   customFetch = fetch,
 ): Promise<Person> => {
-  return await customFetch(`${baseURL}/person/edit`, {
+  return await customFetch(`${baseURL}/person/${personID}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",

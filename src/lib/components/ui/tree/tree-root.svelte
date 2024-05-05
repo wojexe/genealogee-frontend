@@ -25,7 +25,7 @@ onMount(()=> {
 </script>
 
 <div class="h-fit w-fit rounded-3xl overflow-hidden shadow-sm place-content-center">
-  <div bind:this={container} class="flex h-fit w-[90vw] overflow-auto rounded-3xl border border-red px-8 py-10 [&>*]:mx-auto">
+  <div bind:this={container} class="flex h-fit w-max-[90vw] overflow-auto rounded-3xl border border-red p-8 [&>*]:mx-auto">
     {#if tree.rootFamilyID == null}
       <AddFirstPerson tree={tree} />
     {:else}

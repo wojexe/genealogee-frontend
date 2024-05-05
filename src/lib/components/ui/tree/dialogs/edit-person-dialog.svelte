@@ -36,7 +36,7 @@
 
   // TODO: optimistic update
   const editPersonMutation = createMutation({
-    mutationFn: async (personData: EditPersonInput) => editPerson(personData),
+    mutationFn: async (personData: EditPersonInput) => editPerson(person.id, personData),
     onSettled: async () => {
       await queryClient.invalidateQueries({
         queryKey: ["tree", person.treeID],
@@ -65,9 +65,12 @@
     validators: valibot(editPersonSchema),
     onUpdate: async ({ form }) => {
       if (!form.valid) return;
-      if (JSON.stringify(form.data) === JSON.stringify(initialData)) return;
 
       $editPersonMutation.mutate(form.data);
+    },
+    onResult(event) {
+      if (event.result.type == "success")
+        onSubmit();
     },
   });
 
@@ -91,7 +94,6 @@
     method="POST"
     use:enhance
     class="flex flex-col gap-3"
-    onsubmit={() => onSubmit()}
   >
     <Field {form} name="givenNames">
       <Control let:attrs>
