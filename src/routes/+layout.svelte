@@ -1,11 +1,13 @@
 <script lang="ts">
 import "../app.pcss";
 
+import { dev } from "$app/environment";
+import { SvelteQueryDevtools } from "@tanstack/svelte-query-devtools";
+
 import { i18n } from "$lib/i18n";
 import { ParaglideJS } from "@inlang/paraglide-js-adapter-sveltekit";
 
 import { QueryClientProvider } from "@tanstack/svelte-query";
-import { SvelteQueryDevtools } from "@tanstack/svelte-query-devtools";
 
 import { ModeWatcher } from "mode-watcher";
 
@@ -15,11 +17,14 @@ import Footer from "$lib/components/footer.svelte";
 
 const { children, data } = $props();
 const { queryClient } = data;
+
 </script>
 
 <ModeWatcher />
 
-<Badge variant="destructive" class="absolute top-5 right-5">Alpha</Badge>
+{#if dev}
+  <Badge variant="destructive" class="absolute top-5 right-5">Development</Badge>
+{/if}
 
 <ParaglideJS {i18n}>
   <QueryClientProvider client={queryClient}>
@@ -33,7 +38,9 @@ const { queryClient } = data;
 
     <Footer />
 
-    <SvelteQueryDevtools />
+    {#if dev}
+      <SvelteQueryDevtools />
+    {/if}
   </QueryClientProvider>
 </ParaglideJS>
 
