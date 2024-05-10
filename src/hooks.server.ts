@@ -39,16 +39,7 @@ const handleRequestLogger: Handle = async ({ event, resolve }) => {
   event.locals.requestID = requestID;
   event.locals.logger = logger.child({ requestID });
 
-  let response: Response;
-
-  try {
-    response = await resolve(event);
-  } catch (error) {
-    event.locals.logger.error({ error }, "Failed to handle request");
-    throw error;
-  }
-
-  response.headers.set("x-request-id", requestID);
+  const response = await resolve(event);
 
   if (response.status >= 500) {
     event.locals.logger.error(
