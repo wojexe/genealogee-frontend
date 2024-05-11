@@ -129,7 +129,7 @@ export const editPersonSchema = object({
   familyName: string([toTrimmed(), minLength(1)]),
   birthName: optional(
     transform(string([toTrimmed()]), (input) =>
-      input.length === 0 ? undefined : input,
+      input.length === 0 ? null : input,
     ),
   ),
 
