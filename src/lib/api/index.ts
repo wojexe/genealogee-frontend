@@ -1,1 +1,1 @@
-export const baseURL = "https://localhost:8080";
+export const baseURL = import.meta.env.VITE_GENEALOGEE_API_URL;
