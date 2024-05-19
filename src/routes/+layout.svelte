@@ -1,7 +1,9 @@
 <script lang="ts">
 import "../app.pcss";
 
-import { dev } from "$app/environment";
+import { tick } from "svelte";
+import { browser, dev } from "$app/environment";
+
 import { SvelteQueryDevtools } from "@tanstack/svelte-query-devtools";
 
 import { i18n } from "$lib/i18n";
@@ -18,6 +20,12 @@ import Footer from "$lib/components/footer.svelte";
 const { children, data } = $props();
 const { queryClient } = data;
 
+(async () => {
+  if (dev && browser) {
+    await tick()
+    document.title = `🔧 ${document.title}`
+  }
+})()
 </script>
 
 <ModeWatcher />
