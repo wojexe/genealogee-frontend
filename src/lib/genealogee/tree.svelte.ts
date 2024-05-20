@@ -55,22 +55,13 @@ class Tree implements Omit<TreeType, "people" | "families"> {
   }
 
   get name() {
-    if (this.#name) {
-      return this.#name;
-    }
+    if (this.#name) return this.#name;
+    if (this.#rootFamilyID == null) return m.tree_untitled();
 
-    let name: string;
+    const rootFamily = this.families.get(this.#rootFamilyID);
+    if (rootFamily == null) throw new Error("Root family not found");
 
-    if (this.#rootFamilyID == null) {
-      name = m.tree_untitled().toLowerCase();
-    } else {
-      const rootFamily = this.families.get(this.#rootFamilyID);
-
-      if (rootFamily == null) throw new Error("Root family not found");
-
-      name = `${rootFamily.joinedParentNames()}`;
-    }
-
+    const name = `${rootFamily.joinedParentNames()}`;
     // Capitalize first letter
     const displayName = m.family_display_name({ name });
     return displayName[0].toUpperCase() + displayName.slice(1);
@@ -96,6 +87,7 @@ class Tree implements Omit<TreeType, "people" | "families"> {
     return this.#snapshotIDs;
   }
 
+  // TODO: find a way to merge with `get name()`
   public static createName(
     customName: TreeType["name"],
     people: TreeType["people"],
@@ -104,16 +96,10 @@ class Tree implements Omit<TreeType, "people" | "families"> {
   ) {
     if (customName) return customName;
 
-    let name: string;
+    const rootFamily = families.find((f) => f.id === rootFamilyID);
+    if (rootFamily == null) return m.tree_untitled();
 
-    try {
-      const rootFamily = families.find((f) => f.id === rootFamilyID);
-      if (rootFamily == null) throw new Error("Root family not found");
-
-      name = Family.joinedParentNames(rootFamily.parents, people);
-    } catch {
-      name = m.tree_untitled().toLowerCase();
-    }
+    const name = Family.joinedParentNames(rootFamily.parents, people);
 
     // Capitalize first letter
     const displayName = m.family_display_name({ name });
