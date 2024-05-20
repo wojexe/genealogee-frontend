@@ -44,5 +44,7 @@
   "deletePersonDialog_title": "Delete {fullName}?",
   "deletePersonDialog_complexDeleteMessage": "<b>This will also delete this person's whole branch</b> - all partners and\n        children.",
   "actionCannotBeUndone": "This action cannot be undone.",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "tree": "Tree",
+  "trees": "Trees"
 }

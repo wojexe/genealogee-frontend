@@ -66,6 +66,10 @@
   });
 </script>
 
+<svelte:head>
+  <title>{m.trees()} | Genealogee</title>
+</svelte:head>
+
 {#if $dashboardsQuery.isPending}
   <span>Loading...</span>
 {:else if $dashboardsQuery.isError}

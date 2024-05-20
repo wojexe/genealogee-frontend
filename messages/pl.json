@@ -42,7 +42,9 @@
   "delete_": "Usuń",
   "deletePersonDialog_title": "Usunąć {fullName}?",
   "deletePersonDialog_complexDeleteMessage": "<b>Spowoduje to również usunięcie całego poddrzewa tej osoby</b> – wszystkich partnerów oraz dzieci.",
-  "edit_person_dialog_title": "Edytuj {personFullName}",
   "actionCannotBeUndone": "Tej akcji nie można cofnąć.",
-  "cancel": "Anuluj"
+  "cancel": "Anuluj",
+  "edit_person_dialog_title": "Edytuj {personFullName}",
+  "tree": "Drzewo",
+  "trees": "Drzewa"
 }

@@ -1,4 +1,5 @@
 <script>
+  import * as m from "$paraglide/messages"
   import { page } from "$app/stores";
 
   import { getDashboard } from "$lib/api/tree";
@@ -14,6 +15,10 @@
     select: (tree) => new Tree(tree),
   });
 </script>
+
+<svelte:head>
+  <title>{$query?.data?.name ?? m.tree()} | Genealogee</title>
+</svelte:head>
 
 {#if $query.isPending}
   <span>Loading...</span>
