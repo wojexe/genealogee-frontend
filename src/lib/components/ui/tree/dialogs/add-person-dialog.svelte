@@ -72,6 +72,8 @@
       if (!form.valid) return;
 
       $addPersonMutation.mutate(form.data);
+
+      onSubmit();
     },
   });
 
@@ -105,12 +107,7 @@
     <Title>{m.addPersonDialog_title({ who: translatedWho[who] })}</Title>
   </Header>
 
-  <form
-    method="POST"
-    use:enhance
-    class="flex flex-col gap-3"
-    onsubmit={() => onSubmit()}
-  >
+  <form method="POST" use:enhance class="flex flex-col gap-3">
     <Field {form} name="givenNames">
       <Control let:attrs>
         <Label>{m.person_givenNames()}</Label>
