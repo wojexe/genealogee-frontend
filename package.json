@@ -43,6 +43,7 @@
     "@tanstack/svelte-query": "^5.28.4",
     "bits-ui": "^0.21.7",
     "clsx": "^2.1.0 ",
+    "flag-icons": "^7.2.1",
     "formsnap": "^1.0.0",
     "lucide-svelte": "^0.373.0",
     "mode-watcher": "^0.3.0",

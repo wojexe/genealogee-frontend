@@ -1,5 +1,6 @@
 <script lang="ts">
 import "../app.pcss";
+import "/node_modules/flag-icons/css/flag-icons.min.css";
 
 import { tick } from "svelte";
 import { browser, dev } from "$app/environment";
@@ -16,6 +17,7 @@ import { ModeWatcher } from "mode-watcher";
 import Badge from "$lib/components/ui/badge/badge.svelte";
 import Header from "$lib/components/header.svelte";
 import Footer from "$lib/components/footer.svelte";
+  import LanguageSwitcher from "$lib/components/language-switcher.svelte";
 
 const { children, data } = $props();
 const { queryClient } = data;
@@ -49,6 +51,8 @@ const { queryClient } = data;
     {#if dev}
       <SvelteQueryDevtools />
     {/if}
+
+    <LanguageSwitcher />
   </QueryClientProvider>
 </ParaglideJS>
 
