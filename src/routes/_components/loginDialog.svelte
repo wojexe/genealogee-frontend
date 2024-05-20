@@ -11,10 +11,14 @@
 
   import { loginSchema } from "./loginSchema";
 
-  import Spinner from "lucide-svelte/icons/rotate-cw";
-  import { Button } from "$lib/components/ui/button";
   import { Content, Header, Title, Footer } from "$lib/components/ui/dialog";
-  import { Control, Label, Field, FieldErrors } from "$lib/components/ui/form";
+  import {
+    Button,
+    Control,
+    Label,
+    Field,
+    FieldErrors,
+  } from "$lib/components/ui/form";
   import { Input } from "$lib/components/ui/input";
 
   const data = defaults(valibot(loginSchema));
@@ -63,7 +67,7 @@
   </Header>
 
   <form method="POST" use:enhance class="flex flex-col gap-3">
-    <Field {form} name="email" class="grid grid-cols-4 items-center gap-x-4">
+    <Field {form} name="email" class="grid grid-cols-4 items-center gap-x-4 gap-y-1">
       <Control let:attrs>
         <Label>{m.email()}</Label>
         <Input
@@ -77,7 +81,7 @@
       <FieldErrors class="col-span-full" />
     </Field>
 
-    <Field {form} name="password" class="grid grid-cols-4 items-center gap-x-4">
+    <Field {form} name="password" class="grid grid-cols-4 items-center gap-x-4 gap-y-1">
       <Control let:attrs>
         <Label>{m.password()}</Label>
         <Input
@@ -101,12 +105,7 @@
     {/if}
 
     <Footer>
-      <Spinner
-        class="place-self-center animate-spin transition-all {$submitting
-          ? 'opacity-100'
-          : 'opacity-0'}"
-      />
-      <Button type="submit" disabled={$submitting}>{m.login()}</Button>
+      <Button type="submit" pending={$submitting}>{m.login()}</Button>
     </Footer>
   </form>
 </Content>

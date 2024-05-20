@@ -22,7 +22,7 @@
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content="{assets}/skywalkers.png" />
-  <meta property="og:url" content="https://genealogee.app">
+  <meta property="og:url" content="https://genealogee.app" />
 </svelte:head>
 
 <div class="flex flex-col gap-3">

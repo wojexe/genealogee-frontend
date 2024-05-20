@@ -1,8 +1,9 @@
 <script lang="ts" context="module">
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   import type { FormPath, SuperForm } from "sveltekit-superforms";
   type T = Record<string, unknown>;
   type U = unknown;
+
+  import { cn } from "$lib/utils";
 </script>
 
 <script
@@ -29,7 +30,7 @@
   let:tainted
   let:value
 >
-  <div class={className}>
+  <div class={cn(className ?? "")}>
     <slot {constraints} {errors} {tainted} {value} />
   </div>
 </FormPrimitive.Field>

@@ -10,11 +10,16 @@
 
   import { registerSchema } from "./registerSchema";
 
-  import Spinner from "lucide-svelte/icons/rotate-cw";
-  import { Button } from "$lib/components/ui/button";
   import { Content, Header, Title, Footer } from "$lib/components/ui/dialog";
-  import { Control, Label, Field, FieldErrors } from "$lib/components/ui/form";
+  import {
+    Button,
+    Control,
+    Label,
+    Field,
+    FieldErrors,
+  } from "$lib/components/ui/form";
   import { Input } from "$lib/components/ui/input";
+  import FormErrors from "$lib/components/ui/form/form-errors.svelte";
 
   const data = defaults(valibot(registerSchema));
 
@@ -67,7 +72,7 @@
   </Header>
 
   <form method="POST" use:enhance class="flex flex-col gap-3">
-    <Field {form} name="name" class="grid grid-cols-4 items-center gap-x-4">
+    <Field {form} name="name" class="grid grid-cols-4 items-center gap-x-4 gap-y-1">
       <Control let:attrs>
         <Label>{m.name()}</Label>
         <Input
@@ -81,7 +86,7 @@
       <FieldErrors class="col-span-full" />
     </Field>
 
-    <Field {form} name="email" class="grid grid-cols-4 items-center gap-x-4">
+    <Field {form} name="email" class="grid grid-cols-4 items-center gap-x-4 gap-y-1">
       <Control let:attrs>
         <Label>{m.email()}</Label>
         <Input
@@ -95,7 +100,7 @@
       <FieldErrors class="col-span-full" />
     </Field>
 
-    <Field {form} name="password" class="grid grid-cols-4 items-center gap-x-4">
+    <Field {form} name="password" class="grid grid-cols-4 items-center gap-x-4 gap-y-1">
       <Control let:attrs>
         <Label>{m.password()}</Label>
         <Input
@@ -110,21 +115,10 @@
       <FieldErrors class="col-span-4" />
     </Field>
 
-    {#if $message && $message.error}
-      <div class="flex flex-col gap-y-2">
-        <div class="text-[0.8rem] font-medium text-center text-destructive">
-          {$message.error}
-        </div>
-      </div>
-    {/if}
+    <FormErrors error={$message?.error} />
 
     <Footer>
-      <Spinner
-        class="place-self-center animate-spin transition-all {$submitting
-          ? 'opacity-100'
-          : 'opacity-0'}"
-      />
-      <Button type="submit" disabled={$submitting}>{m.register()}</Button>
+      <Button type="submit" pending={$submitting}>{m.register()}</Button>
     </Footer>
   </form>
 </Content>
