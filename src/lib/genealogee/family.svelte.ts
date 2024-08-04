@@ -1,8 +1,8 @@
 import type { Tree } from "./tree.svelte";
 
-import type { Tree as TreeType } from "$lib/api/tree";
-import type { Person as PersonType } from "$lib/api/person";
 import type { Family as FamilyType } from "$lib/api/family";
+import type { Person as PersonType } from "$lib/api/person";
+import type { Tree as TreeType } from "$lib/api/tree";
 
 import { Person } from "./person.svelte";
 

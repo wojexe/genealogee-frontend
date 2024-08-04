@@ -30,6 +30,6 @@ export default defineConfig(async ({ mode }) => {
     test: {
       include: ["src/**/*.{test,spec}.{js,ts}"],
     },
-    ...extraOptions
+    ...extraOptions,
   };
 });
