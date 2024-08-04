@@ -1,5 +1,5 @@
 import { readFile } from "node:fs/promises";
-import { paraglide } from "@inlang/paraglide-js-adapter-sveltekit/vite";
+import { paraglide } from "@inlang/paraglide-sveltekit/vite";
 import { sveltekit } from "@sveltejs/kit/vite";
 import { defineConfig } from "vitest/config";
 

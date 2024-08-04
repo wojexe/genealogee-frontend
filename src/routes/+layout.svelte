@@ -1,33 +1,33 @@
 <script lang="ts">
-import "../app.pcss";
-import "/node_modules/flag-icons/css/flag-icons.min.css";
+  import "../app.pcss";
+  import "/node_modules/flag-icons/css/flag-icons.min.css";
 
-import { tick } from "svelte";
-import { browser, dev } from "$app/environment";
+  import { tick } from "svelte";
+  import { browser, dev } from "$app/environment";
 
-import { SvelteQueryDevtools } from "@tanstack/svelte-query-devtools";
+  import { SvelteQueryDevtools } from "@tanstack/svelte-query-devtools";
 
-import { i18n } from "$lib/i18n";
-import { ParaglideJS } from "@inlang/paraglide-js-adapter-sveltekit";
+  import { i18n } from "$lib/i18n";
+  import { ParaglideJS } from "@inlang/paraglide-sveltekit";
 
-import { QueryClientProvider } from "@tanstack/svelte-query";
+  import { QueryClientProvider } from "@tanstack/svelte-query";
 
-import { ModeWatcher } from "mode-watcher";
+  import { ModeWatcher } from "mode-watcher";
 
-import Badge from "$lib/components/ui/badge/badge.svelte";
-import Header from "$lib/components/header.svelte";
-import Footer from "$lib/components/footer.svelte";
+  import Badge from "$lib/components/ui/badge/badge.svelte";
+  import Header from "$lib/components/header.svelte";
+  import Footer from "$lib/components/footer.svelte";
   import LanguageSwitcher from "$lib/components/language-switcher.svelte";
 
-const { children, data } = $props();
-const { queryClient } = data;
+  const { children, data } = $props();
+  const { queryClient } = data;
 
-(async () => {
-  if (dev && browser) {
-    await tick()
-    document.title = `🔧 ${document.title}`
-  }
-})()
+  (async () => {
+    if (dev && browser) {
+      await tick()
+      document.title = `🔧 ${document.title}`
+    }
+  })()
 </script>
 
 <ModeWatcher />
