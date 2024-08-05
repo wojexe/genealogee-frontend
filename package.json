@@ -39,7 +39,6 @@
     "vitest": "^1.2.0"
   },
   "dependencies": {
-    "@internationalized/date": "^3.5.2",
     "@tanstack/svelte-query": "^5.28.4",
     "bits-ui": "^0.21.7",
     "clsx": "^2.1.0 ",
