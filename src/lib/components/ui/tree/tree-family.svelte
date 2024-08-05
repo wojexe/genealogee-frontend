@@ -52,7 +52,7 @@ type Props = {
     {/each}
 
     <div class="-mb-12 translate-y-[70%]">
-      <AddChild {tree} familyID="{family!.id}" />
+      <AddChild {tree} familyID={family!.id} />
     </div>
   </div>
 

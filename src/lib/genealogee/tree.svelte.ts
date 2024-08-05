@@ -6,7 +6,7 @@ import { Family } from "$lib/genealogee/family.svelte";
 import { Person } from "$lib/genealogee/person.svelte";
 
 // biome-ignore lint/suspicious/noShadowRestrictedNames: Reactive map
-import { Map } from "svelte/reactivity";
+import { SvelteMap } from "svelte/reactivity";
 
 import * as m from "$paraglide/messages";
 
@@ -16,9 +16,9 @@ class Tree implements Omit<TreeType, "people" | "families"> {
 
   #name = $state<TreeType["name"]>("");
 
-  #people = new Map<PersonType["id"], Person>();
-  #families = new Map<FamilyType["id"], Family>();
-  #parents = new Map<PersonType["id"], FamilyType["id"]>();
+  #people = new SvelteMap<PersonType["id"], Person>();
+  #families = new SvelteMap<FamilyType["id"], Family>();
+  #parents = new SvelteMap<PersonType["id"], FamilyType["id"]>();
 
   #rootFamilyID = $state<TreeType["rootFamilyID"]>(undefined);
   #snapshotIDs = $state<TreeType["snapshotIDs"]>([]);

@@ -16,6 +16,7 @@
   import Plus from "lucide-svelte/icons/plus";
   import { Card, Content } from "$lib/components/ui/card";
   import { Button } from "$lib/components/ui/button";
+  import { browser } from "$app/environment";
 
   const { data } = $props();
   const queryClient = data.queryClient;
@@ -90,6 +91,12 @@
   disabled={$createDashboardMutation.isPending}
   on:click={() => $createDashboardMutation.mutate(undefined)}
 >
-  <Plus class="h-5 w-5" />
+  <!-- Workaround around a werid hydration error -->
+  {#if browser}
+    <Plus class="h-5 w-5" />
+  {:else}
+    <Plus class="h-5 w-5" />
+  {/if}
+
   {m.create_dashboard()}
 </Button>
