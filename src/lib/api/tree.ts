@@ -9,9 +9,9 @@ import {
   object,
   optional,
   parse,
+  pipe,
   string,
   uuid,
-  pipe,
 } from "valibot";
 
 export const treeSchema = object({

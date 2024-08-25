@@ -1,6 +1,6 @@
 // Schemas
 
-import { type InferOutput, array, object, string, uuid, pipe } from "valibot";
+import { type InferOutput, array, object, pipe, string, uuid } from "valibot";
 
 export type Family = InferOutput<typeof familySchema>;
 

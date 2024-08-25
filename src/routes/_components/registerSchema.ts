@@ -2,9 +2,9 @@ import {
   email,
   maxLength,
   minLength,
-  string,
-  strictObject,
   pipe,
+  strictObject,
+  string,
 } from "valibot";
 
 export const registerSchema = strictObject({
