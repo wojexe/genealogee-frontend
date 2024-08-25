@@ -4,28 +4,29 @@ import { familySchema } from "$lib/api/family";
 import { personSchema } from "$lib/api/person";
 
 import {
-  type Output,
+  type InferOutput,
   array,
   object,
   optional,
   parse,
   string,
   uuid,
+  pipe,
 } from "valibot";
 
 export const treeSchema = object({
-  id: string([uuid()]),
-  creatorID: string([uuid()]),
+  id: pipe(string(), uuid()),
+  creatorID: pipe(string(), uuid()),
   name: string(),
 
   people: array(personSchema),
   families: array(familySchema),
 
-  rootFamilyID: optional(string([uuid()])),
-  snapshotIDs: array(string([uuid()])),
+  rootFamilyID: optional(pipe(string(), uuid())),
+  snapshotIDs: array(pipe(string(), uuid())),
 });
 
-export type Tree = Output<typeof treeSchema>;
+export type Tree = InferOutput<typeof treeSchema>;
 export type Dashboard = Tree;
 
 // API
@@ -58,7 +59,7 @@ export const deleteTree = async (
   treeID: string,
   customFetch = fetch,
 ): Promise<void> => {
-  parse(string([uuid()]), treeID);
+  parse(pipe(string(), uuid()), treeID);
 
   return await customFetch(`${baseURL}/tree/${treeID}`, {
     method: "DELETE",
@@ -102,7 +103,7 @@ export const getDashboard = async (
   id: string,
   customFetch = fetch,
 ): Promise<Dashboard> => {
-  parse(string([uuid()]), id);
+  parse(pipe(string(), uuid()), id);
 
   return await customFetch(`${baseURL}/tree/${id}`, {
     method: "GET",
@@ -119,7 +120,7 @@ const dashboardsSchema = object({
   trees: array(treeSchema),
 });
 
-export type Dashboards = Output<typeof dashboardsSchema>;
+export type Dashboards = InferOutput<typeof dashboardsSchema>;
 
 export const getDashboards = async (
   customFetch = fetch,

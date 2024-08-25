@@ -1,11 +1,15 @@
-import { email, maxLength, minLength, never, object, string } from "valibot";
+import {
+  email,
+  maxLength,
+  minLength,
+  string,
+  strictObject,
+  pipe,
+} from "valibot";
 
-export const loginSchema = object(
-  {
-    email: string([email()]),
-    password: string([minLength(8), maxLength(1024)]),
-  },
-  never(),
-);
+export const loginSchema = strictObject({
+  email: pipe(string(), email()),
+  password: pipe(string(), minLength(8), maxLength(1024)),
+});
 
 export type LoginSchema = typeof loginSchema;

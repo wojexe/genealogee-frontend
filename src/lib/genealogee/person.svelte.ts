@@ -1,7 +1,6 @@
 import type { Dates as DatesType, Person as PersonType } from "$lib/api/person";
 
-// biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
-import { Date } from "svelte/reactivity";
+import { SvelteDate } from "svelte/reactivity";
 
 class Person implements PersonType {
   id;
@@ -44,9 +43,9 @@ class Dates implements DatesType {
   deathCustom = $state<DatesType["deathCustom"]>(null);
 
   constructor(dates: DatesType | undefined) {
-    this.birth = dates?.birth != null ? new Date(dates.birth) : null;
+    this.birth = dates?.birth != null ? new SvelteDate(dates.birth) : null;
     this.birthCustom = dates?.birthCustom ?? null;
-    this.death = dates?.death != null ? new Date(dates.death) : null;
+    this.death = dates?.death != null ? new SvelteDate(dates.death) : null;
     this.deathCustom = dates?.deathCustom ?? null;
   }
 

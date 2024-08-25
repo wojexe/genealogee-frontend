@@ -5,7 +5,6 @@ import type { Tree as TreeType } from "$lib/api/tree";
 import { Family } from "$lib/genealogee/family.svelte";
 import { Person } from "$lib/genealogee/person.svelte";
 
-// biome-ignore lint/suspicious/noShadowRestrictedNames: Reactive map
 import { SvelteMap } from "svelte/reactivity";
 
 import * as m from "$paraglide/messages";
