@@ -39,17 +39,23 @@
   },
   "dependencies": {
     "@tanstack/svelte-query": "^5.28.4",
-    "bits-ui": "^0.21.7",
-    "clsx": "^2.1.0 ",
-    "flag-icons": "^7.2.1",
-    "formsnap": "^1.0.0",
-    "lucide-svelte": "^0.428.0",
+    "bits-ui": "^0.21.13",
+    "clsx": "^2.1.1",
+    "flag-icons": "^7.2.3",
+    "formsnap": "^1.0.1",
+    "lucide-svelte": "^0.435.0",
     "mode-watcher": "0.4.1",
     "pino": "^9.3.2",
     "pino-pretty": "^11.2.2",
-    "sveltekit-superforms": "^2.12.2",
-    "tailwind-merge": "^2.2.2",
+    "sveltekit-superforms": "2.12.2",
+    "tailwind-merge": "^2.5.2",
     "tailwind-variants": "^0.2.1",
-    "valibot": "^0.30.0"
-  }
+    "valibot": "0.30.0"
+  },
+  "trustedDependencies": [
+    "@biomejs/biome",
+    "@sveltejs/kit",
+    "esbuild",
+    "svelte-preprocess"
+  ]
 }
