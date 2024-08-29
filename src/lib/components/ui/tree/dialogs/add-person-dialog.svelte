@@ -45,13 +45,13 @@
   const queryClient = useQueryClient();
 
   // TODO: optimistic update
-  const addPersonMutation = createMutation({
+  const addPersonMutation = createMutation(() => ({
     mutationFn: async (personData: CreatePersonInput) =>
       createPerson(personData),
     onSettled: async () => {
       await queryClient.invalidateQueries({ queryKey: ["tree", treeID] });
     },
-  });
+  }));
 
   let formID;
   if (personID == null && familyID == null) {
@@ -71,7 +71,7 @@
     onUpdate: async ({ form }) => {
       if (!form.valid) return;
 
-      $addPersonMutation.mutate(form.data);
+      addPersonMutation.mutate(form.data);
 
       onSubmit();
     },

@@ -1,12 +1,16 @@
-import { email, maxLength, minLength, never, object, string } from "valibot";
+import {
+  email,
+  maxLength,
+  minLength,
+  pipe,
+  strictObject,
+  string,
+} from "valibot";
 
-export const registerSchema = object(
-  {
-    email: string([email()]),
-    name: string([minLength(1), maxLength(64)]),
-    password: string([minLength(8), maxLength(1024)]),
-  },
-  never(),
-);
+export const registerSchema = strictObject({
+  email: pipe(string(), email()),
+  name: pipe(string(), minLength(1), maxLength(64)),
+  password: pipe(string(), minLength(8), maxLength(1024)),
+});
 
 export type RegisterSchema = typeof registerSchema;

@@ -37,7 +37,7 @@
   const queryClient = useQueryClient();
 
   // TODO: optimistic update
-  const editPersonMutation = createMutation({
+  const editPersonMutation = createMutation(() => ({
     mutationFn: async (personData: EditPersonInput) =>
       editPerson(person.id, personData),
     onSettled: async () => {
@@ -45,7 +45,7 @@
         queryKey: ["tree", person.treeID],
       });
     },
-  });
+  }));
 
   const initialData: EditPersonInput = {
     treeID: person.treeID,
@@ -69,7 +69,7 @@
     onUpdate: async ({ form }) => {
       if (!form.valid) return;
 
-      $editPersonMutation.mutate(form.data);
+      editPersonMutation.mutate(form.data);
     },
     onResult(event) {
       if (event.result.type == "success") onSubmit();

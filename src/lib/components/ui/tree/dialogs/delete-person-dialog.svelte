@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  import * as m from "$paraglide/messages"
+  import * as m from "$paraglide/messages";
   import type { Person } from "$lib/genealogee";
 
   type Props = {
@@ -20,7 +20,7 @@
 
   const queryClient = useQueryClient();
 
-  const deletePersonMutation = createMutation({
+  const deletePersonMutation = createMutation(() => ({
     mutationFn: async () => deletePerson(person.id),
     onSettled: async () => {
       await queryClient.invalidateQueries({
@@ -28,7 +28,7 @@
       });
       await queryClient.invalidateQueries({ queryKey: ["trees"] });
     },
-  });
+  }));
 </script>
 
 <AlertDialog.Content>
@@ -40,9 +40,9 @@
     >
     <AlertDialog.Description class="flex flex-col gap-3">
       <span>
-      {#if isComplexDelete}
-        {@html m.deletePersonDialog_complexDeleteMessage()}
-      {/if}
+        {#if isComplexDelete}
+          {@html m.deletePersonDialog_complexDeleteMessage()}
+        {/if}
       </span>
 
       <div class="font-bold text-center">{m.actionCannotBeUndone()}</div>
@@ -53,7 +53,9 @@
     <AlertDialog.Cancel>{m.cancel()}</AlertDialog.Cancel>
     <AlertDialog.Action
       class={buttonVariants({ variant: "destructive" })}
-      onclick={() => $deletePersonMutation.mutate()}>{m.delete_()}</AlertDialog.Action
+      onclick={() => deletePersonMutation.mutate()}
     >
+      {m.delete_()}
+    </AlertDialog.Action>
   </AlertDialog.Footer>
 </AlertDialog.Content>

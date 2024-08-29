@@ -1,44 +1,45 @@
 // Schemas
 
 import {
-  type Output,
-  coerce,
+  type InferOutput,
   date,
+  isoTimestamp,
+  minLength,
   nullable,
   object,
   optional,
-  string,
-  uuid,
   parse,
-  minLength,
+  pipe,
+  string,
   transform,
-  toTrimmed,
-  toCustom,
+  trim,
+  union,
+  uuid,
 } from "valibot";
 
 import { baseURL } from "$lib/api";
 
-export type Dates = Output<typeof datesSchema>;
+export type Dates = InferOutput<typeof datesSchema>;
 
 export const datesSchema = object({
-  birth: nullable(coerce(date(), (input) => new Date(input as string))),
+  birth: nullable(union([date(), pipe(string(), isoTimestamp())])),
   birthCustom: nullable(string()),
-  death: nullable(coerce(date(), (input) => new Date(input as string))),
+  death: nullable(union([date(), pipe(string(), isoTimestamp())])),
   deathCustom: nullable(string()),
 });
 
-export type Person = Output<typeof personSchema>;
+export type Person = InferOutput<typeof personSchema>;
 
 export const personSchema = object({
-  id: string([uuid()]),
-  creatorID: string([uuid()]),
-  treeID: string([uuid()]),
+  id: pipe(string(), uuid()),
+  creatorID: pipe(string(), uuid()),
+  treeID: pipe(string(), uuid()),
   givenNames: string(),
   familyName: string(),
   birthName: optional(string()),
   dateOf: optional(datesSchema),
-  familyID: optional(string([uuid()])),
-  parentFamilyID: optional(string([uuid()])),
+  familyID: optional(pipe(string(), uuid())),
+  parentFamilyID: optional(pipe(string(), uuid())),
 });
 
 // func boot(routes: RoutesBuilder) throws {
@@ -82,26 +83,28 @@ export const personSchema = object({
 
 export const createPersonSchema = object(
   {
-    treeID: string([uuid()]),
+    treeID: pipe(string(), uuid()),
 
-    givenNames: string([toTrimmed(), minLength(1)]),
-    familyName: string([toTrimmed(), minLength(1)]),
+    givenNames: pipe(string(), trim(), minLength(1)),
+    familyName: pipe(string(), trim(), minLength(1)),
     birthName: optional(
-      transform(string([toTrimmed()]), (input) =>
-        input.length === 0 ? undefined : input,
+      pipe(
+        string(),
+        trim(),
+        transform((input) => (input.length === 0 ? undefined : input)),
       ),
     ),
 
     dateOf: datesSchema,
 
-    childOf: optional(string([uuid()])),
-    partnerOf: optional(string([uuid()])),
+    childOf: optional(pipe(string(), uuid())),
+    partnerOf: optional(pipe(string(), uuid())),
   },
   // TODO: enable the following check for requests other than the first person
   // [custom(({ childOf, partnerOf }) => xor(childOf, partnerOf))],
 );
 
-export type CreatePersonInput = Output<typeof createPersonSchema>;
+export type CreatePersonInput = InferOutput<typeof createPersonSchema>;
 
 export const createPerson = async (
   personData: CreatePersonInput,
@@ -123,20 +126,22 @@ export const createPerson = async (
 };
 
 export const editPersonSchema = object({
-  treeID: string([uuid()]),
+  treeID: pipe(string(), uuid()),
 
-  givenNames: string([toTrimmed(), minLength(1)]),
-  familyName: string([toTrimmed(), minLength(1)]),
+  givenNames: pipe(string(), trim(), minLength(1)),
+  familyName: pipe(string(), trim(), minLength(1)),
   birthName: optional(
-    transform(string([toTrimmed()]), (input) =>
-      input.length === 0 ? null : input,
+    pipe(
+      string(),
+      trim(),
+      transform((input) => (input.length === 0 ? null : input)),
     ),
   ),
 
   dateOf: datesSchema,
 });
 
-export type EditPersonInput = Output<typeof editPersonSchema>;
+export type EditPersonInput = InferOutput<typeof editPersonSchema>;
 
 export const editPerson = async (
   personID: string,

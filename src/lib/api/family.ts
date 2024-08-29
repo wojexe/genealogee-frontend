@@ -1,13 +1,13 @@
 // Schemas
 
-import { type Output, array, object, string, uuid } from "valibot";
+import { type InferOutput, array, object, pipe, string, uuid } from "valibot";
 
-export type Family = Output<typeof familySchema>;
+export type Family = InferOutput<typeof familySchema>;
 
 export const familySchema = object({
-  id: string([uuid()]),
-  creatorID: string([uuid()]),
-  treeID: string([uuid()]),
-  parents: array(string([uuid()])),
-  children: array(string([uuid()])),
+  id: pipe(string(), uuid()),
+  creatorID: pipe(string(), uuid()),
+  treeID: pipe(string(), uuid()),
+  parents: array(pipe(string(), uuid())),
+  children: array(pipe(string(), uuid())),
 });

@@ -23,7 +23,7 @@
 
   const queryClient = useQueryClient();
 
-  const deleteDashboardMutation = createMutation({
+  const deleteDashboardMutation = createMutation(() => ({
     mutationFn: (id: string) => deleteTree(id),
     onMutate: async (id: string) => {
       await queryClient.cancelQueries({ queryKey: ["trees"] });
@@ -48,7 +48,7 @@
     onSettled: async (_data, _error, id, _context) => {
       await queryClient.invalidateQueries({ queryKey: ["tree", id] });
     },
-  });
+  }));
 
   const treeName = $derived(
     Tree.createName(tree.name, tree.people, tree.families, tree.rootFamilyID)
@@ -63,7 +63,7 @@
     <Button
       variant="destructive_outline"
       size="icon"
-      on:click={() => $deleteDashboardMutation.mutate(tree.id)}
+      on:click={() => deleteDashboardMutation.mutate(tree.id)}
     >
       <Trash />
     </Button>
