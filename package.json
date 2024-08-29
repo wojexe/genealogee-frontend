@@ -38,7 +38,7 @@
     "vitest": "2.0.5"
   },
   "dependencies": {
-    "@tanstack/svelte-query": "^5.28.4",
+    "@tanstack/svelte-query": "https://pkg.pr.new/@tanstack/svelte-query@0cd7069",
     "bits-ui": "^0.21.13",
     "clsx": "^2.1.1",
     "flag-icons": "^7.2.3",

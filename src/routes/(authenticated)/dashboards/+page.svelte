@@ -21,12 +21,12 @@
   const { data } = $props();
   const queryClient = data.queryClient;
 
-  const dashboardsQuery = createQuery({
+  const dashboardsQuery = createQuery(() => ({
     queryKey: ["trees"],
     queryFn: () => getDashboards(fetch),
-  });
+  }));
 
-  const createDashboardMutation = createMutation({
+  const createDashboardMutation = createMutation(() => ({
     mutationFn: (name: string | undefined) => createTree(name),
     onMutate: async (name) => {
       await queryClient.cancelQueries({ queryKey: ["trees"] });
@@ -64,32 +64,32 @@
         trees: context.previousTrees,
       });
     },
-  });
+  }));
 </script>
 
 <svelte:head>
   <title>{m.trees()} | Genealogee</title>
 </svelte:head>
 
-{#if $dashboardsQuery.isPending}
+{#if dashboardsQuery.isPending}
   <span>Loading...</span>
-{:else if $dashboardsQuery.isError}
-  <span>Error: {$dashboardsQuery.error.message}</span>
-{:else if $dashboardsQuery.data?.trees.length === 0}
+{:else if dashboardsQuery.isError}
+  <span>Error: {dashboardsQuery.error.message}</span>
+{:else if dashboardsQuery.data?.trees.length === 0}
   <Card class="border border-solid border-amber-500 border-amber-500/50">
     <Content>
       <p>{m.no_dashboards_found()}</p>
     </Content>
   </Card>
 {:else}
-  <DashboardGrid trees={$dashboardsQuery.data.trees} />
+  <DashboardGrid trees={dashboardsQuery.data.trees} />
 {/if}
 
 <Button
   variant="outline"
   class="flex gap-2"
-  disabled={$createDashboardMutation.isPending}
-  on:click={() => $createDashboardMutation.mutate(undefined)}
+  disabled={createDashboardMutation.isPending}
+  on:click={() => createDashboardMutation.mutate(undefined)}
 >
   <!-- Workaround around a werid hydration error -->
   {#if browser}
