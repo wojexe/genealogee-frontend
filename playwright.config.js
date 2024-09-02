@@ -1,7 +1,7 @@
 /** @type {import('@playwright/test').PlaywrightTestConfig} */
 const config = {
   webServer: {
-    command: "npm run build && npm run preview",
+    command: "NODE_TLS_REJECT_UNAUTHORIZED=0 bun run build && bun run preview",
     port: 4173,
   },
   testDir: "tests",

@@ -30,6 +30,13 @@ export default defineConfig(async ({ mode }) => {
     test: {
       include: ["src/**/*.{test,spec}.{js,ts}"],
     },
+    preview: {
+      https: {
+        key: await readFile("./certs/key.pem"),
+        cert: await readFile("./certs/cert.pem"),
+      },
+      proxy: {},
+    },
     ...extraOptions,
   };
 });
