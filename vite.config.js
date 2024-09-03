@@ -3,22 +3,21 @@ import { paraglide } from "@inlang/paraglide-sveltekit/vite";
 import { sveltekit } from "@sveltejs/kit/vite";
 import { defineConfig } from "vitest/config";
 
-export default defineConfig(async ({ mode }) => {
+export default defineConfig(async ({ mode, isPreview }) => {
   let extraOptions = {};
 
-  switch (mode) {
-    case "development":
-      extraOptions = {
-        ...extraOptions,
-        server: await getHTTPSAndProxy(),
-      };
-      break;
-    case "staging":
-      extraOptions = {
-        ...extraOptions,
-        preview: await getHTTPSAndProxy(),
-      };
-      break;
+  if (mode === "development") {
+    extraOptions = {
+      ...extraOptions,
+      server: await getHTTPSAndProxy(),
+    };
+  }
+
+  if (isPreview) {
+    extraOptions = {
+      ...extraOptions,
+      preview: await getHTTPSAndProxy(),
+    };
   }
 
   return {
