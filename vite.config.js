@@ -6,20 +6,23 @@ import { defineConfig } from "vitest/config";
 export default defineConfig(async ({ mode }) => {
   let extraOptions = {};
 
-  if (mode === "development") {
-    extraOptions = {
-      ...extraOptions,
-      server: {
-        https: {
-          key: await readFile("./certs/key.pem"),
-          cert: await readFile("./certs/cert.pem"),
-        },
-        proxy: {},
-      },
-    };
+  switch (mode) {
+    case "development":
+      extraOptions = {
+        ...extraOptions,
+        server: await getHTTPSAndProxy(),
+      };
+      break;
+    case "staging":
+      extraOptions = {
+        ...extraOptions,
+        preview: await getHTTPSAndProxy(),
+      };
+      break;
   }
 
   return {
+    ...extraOptions,
     plugins: [
       sveltekit(),
       paraglide({
@@ -30,13 +33,13 @@ export default defineConfig(async ({ mode }) => {
     test: {
       include: ["src/**/*.{test,spec}.{js,ts}"],
     },
-    preview: {
-      https: {
-        key: await readFile("./certs/key.pem"),
-        cert: await readFile("./certs/cert.pem"),
-      },
-      proxy: {},
-    },
-    ...extraOptions,
   };
+});
+
+const getHTTPSAndProxy = async () => ({
+  https: {
+    key: await readFile("./certs/key.pem"),
+    cert: await readFile("./certs/cert.pem"),
+  },
+  proxy: {},
 });
