@@ -5,8 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "NODE_TLS_REJECT_UNAUTHORIZED=0 vite dev",
+    "preview": "NODE_TLS_REJECT_UNAUTHORIZED=0 vite preview --mode staging",
     "build": "paraglide-js compile --project ./project.inlang && vite build",
-    "preview": "vite preview",
+    "build:staging": "paraglide-js compile --project ./project.inlang && vite build --mode staging",
+    "clean:build": "rm -rf ./.svelte-kit ./.vercel",
+    "clean:modules": "rm -rf ./node_modules",
+    "clean:clean": "rm -rf ./test-results",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "test": "npm run test:integration && npm run test:unit",

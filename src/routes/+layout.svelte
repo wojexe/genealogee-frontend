@@ -34,6 +34,8 @@
 
 {#if dev}
   <Badge variant="destructive" class="absolute top-5 right-5">Development</Badge>
+{:else if import.meta.env.MODE === "staging"}
+  <Badge class="absolute top-5 right-5 border-transparent bg-purple-700 text-white shadow hover:bg-purple-700/80">Staging</Badge>
 {/if}
 
 <ParaglideJS {i18n}>
